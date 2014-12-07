@@ -8,12 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSInteger, KivaLoanRequestType) {
+typedef NS_ENUM(NSInteger, LoanRequestType) {
 	kNewestLoansRequest
 };
 
 @interface KivaLoanRequest : NSObject
 
-@property (nonatomic) KivaLoanRequestType requestType;
+@property (nonatomic) LoanRequestType requestType;
+
++ (instancetype)newestLoans;
+
+- (NSURLRequest *)urlRequest;
 
 @end

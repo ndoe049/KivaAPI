@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:KivaExample/KivaExample.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:KivaAPI.xcodeproj">
    </FileRef>
    <FileRef
