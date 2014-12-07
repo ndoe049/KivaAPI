@@ -43,7 +43,7 @@ static const NSString *kRefuned			= @"refunded";
 
 - (id)initWithDictionary:(NSDictionary *)dictionary {
 	if (self = [super init]) {
-		_loadId = [NSNumber numberWithLong:[[dictionary objectForKey:kLoanId] longValue]];
+		_loanId = [NSNumber numberWithLong:[[dictionary objectForKey:kLoanId] longValue]];
 		_name = [dictionary objectForKey:kName];
 		
 		NSDictionary *description = [dictionary objectForKey:kDescription];
@@ -109,6 +109,28 @@ static const NSString *kRefuned			= @"refunded";
 	}
 	
 	return REFUNDED;
+}
+
+- (NSString *)description {
+	return [NSString stringWithFormat:@"KivaLoan[loanId = %d, name = %@, status = %ld, fundedAmount = %d, basketAmount = %d, imageId = %d, activity = %@, sector = %@, use = %@, theme = %@, location = %@, partnerId = %d, postedDate = %@, plannedEndDate = %@, loanAmount = %d, borrowerCount = %d, lenderCount = %d]",
+			[_loanId intValue],
+			_name,
+			_status,
+			[_fundedAmount intValue],
+			[_basketAmount intValue],
+			[_imageId intValue],
+			_activity,
+			_sector,
+			_use,
+			_theme,
+			_location,
+			[_partnerId intValue],
+			_postedDate,
+			_plannedExpirationDate,
+			[_loanAmount intValue],
+			[_borrowerCount intValue],
+			[_lenderCount intValue]];
+			
 }
 
 @end

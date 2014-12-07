@@ -8,6 +8,7 @@
 
 #import "MasterViewController.h"
 #import "DetailViewController.h"
+#import "KivaAPI.h"
 
 @interface MasterViewController ()
 
@@ -27,6 +28,17 @@
 
 	UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
 	self.navigationItem.rightBarButtonItem = addButton;
+	
+	KivaLoanRequest *request = [KivaLoanRequest newestLoans];
+	[KivaRequestManager sendLoanRequest:request withCompletionHandler:^(BOOL success, NSArray *loans, NSError *error) {
+		if (success) {
+			for (KivaLoan *loan in loans) {
+				NSLog(@"%@", loan);
+			}
+		} else {
+			NSLog(@"%@", error);
+		}
+	}];
 }
 
 - (void)didReceiveMemoryWarning {

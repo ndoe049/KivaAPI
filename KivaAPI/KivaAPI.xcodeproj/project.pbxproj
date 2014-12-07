@@ -58,6 +58,7 @@
 		6C69135B1A35037A0012D6B1 /* KivaLoan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KivaLoan.m; sourceTree = "<group>"; };
 		6C69135C1A35037A0012D6B1 /* KivaLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KivaLocation.h; sourceTree = "<group>"; };
 		6C69135D1A35037A0012D6B1 /* KivaLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KivaLocation.m; sourceTree = "<group>"; };
+		6C6913601A3503CB0012D6B1 /* KivaAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KivaAPI.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +144,7 @@
 		6C69134B1A3503190012D6B1 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				6C6913601A3503CB0012D6B1 /* KivaAPI.h */,
 				6C69134C1A3503230012D6B1 /* Auth */,
 				6C69134D1A3503270012D6B1 /* Request */,
 				6C69134E1A35032E0012D6B1 /* Request Manager */,

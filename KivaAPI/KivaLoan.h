@@ -23,7 +23,7 @@ typedef NS_ENUM(NSInteger, LoanStatus) {
 
 @interface KivaLoan : NSObject
 
-@property (nonatomic, readonly) NSNumber *loadId;
+@property (nonatomic, readonly) NSNumber *loanId;
 @property (nonatomic, readonly) NSString *name;
 @property (nonatomic, readonly) NSArray *languages;
 @property (nonatomic, readonly) LoanStatus status;
@@ -45,5 +45,7 @@ typedef NS_ENUM(NSInteger, LoanStatus) {
 @property (nonatomic, readonly) NSArray *tags;
 
 + (LoanStatus)loanStatusFromString:(NSString *)value;
+
+- (id)initWithDictionary:(NSDictionary *)dictionary;
 
 @end

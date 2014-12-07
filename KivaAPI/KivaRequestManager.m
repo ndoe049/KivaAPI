@@ -7,6 +7,7 @@
 //
 
 #import "KivaRequestManager.h"
+#import "KivaLoan.h"
 
 static const NSString *kLoans	= @"loans";
 
@@ -31,7 +32,14 @@ static NSString *applcationId	= @"";
 								   }
 								   
 								   if (!jsonError) {
-									   completionHandler(YES, [jsonDictionary objectForKey:kLoans], nil);
+									   NSArray *loanDictionaries = [jsonDictionary objectForKey:kLoans];
+									   NSMutableArray *values = [[NSMutableArray alloc] init];
+									   
+									   for (NSDictionary *d in loanDictionaries) {
+										   [values addObject:[[KivaLoan	alloc] initWithDictionary:d]];
+									   }
+									   
+									   completionHandler(YES, [NSArray arrayWithArray:values], nil);
 								   } else {
 									   completionHandler(NO, nil, jsonError);
 								   }
