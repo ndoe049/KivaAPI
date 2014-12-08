@@ -10,7 +10,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class KivaLocation, KivaImage;
+@class KivaLocation, KivaImage, KivaVideo;
 
 typedef NS_ENUM(NSInteger, LoanStatus) {
 	FUNDRAISING,
@@ -43,6 +43,7 @@ typedef NS_ENUM(NSInteger, LoanStatus) {
 @property (nonatomic, readonly) NSNumber *lenderCount;
 @property (nonatomic, getter = isBonusCreditEligible) BOOL bonusCreditElibibility;
 @property (nonatomic, readonly) NSArray *tags;
+@property (nonatomic, readonly) KivaVideo *video;
 
 + (LoanStatus)loanStatusFromString:(NSString *)value;
 

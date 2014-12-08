@@ -9,6 +9,7 @@
 #import "KivaLoan.h"
 #import "KivaLocation.h"
 #import "KivaImage.h"
+#import "KivaVideo.h"
 
 static const NSString *kLoanId			= @"id";
 static const NSString *kName			= @"name";
@@ -31,6 +32,7 @@ static const NSString *kBorrowerCount	= @"borrower_count";
 static const NSString *kLenderCount		= @"lender_count";
 static const NSString *kBonusCredit		= @"bonus_credit_eligibility";
 static const NSString *kTags			= @"tags";
+static const NSString *kVideo			= @"video";
 
 static const NSString *kFundraising		= @"fundraising";
 static const NSString *kFunded			= @"funded";
@@ -83,6 +85,7 @@ static const NSString *kRefuned			= @"refunded";
 		}
 		
 		_tags = [NSArray arrayWithArray:values];
+		_video = [[KivaVideo alloc] initWithDictionary:[dictionary objectForKey:kVideo]];
 	}
 	
 	return self;
@@ -105,7 +108,7 @@ static const NSString *kRefuned			= @"refunded";
 }
 
 - (NSString *)description {
-	return [NSString stringWithFormat:@"KivaLoan[loanId = %d, name = %@, status = %ld, fundedAmount = %d, basketAmount = %d, image = %@, activity = %@, sector = %@, use = %@, theme = %@, location = %@, partnerId = %d, postedDate = %@, plannedEndDate = %@, loanAmount = %d, borrowerCount = %d, lenderCount = %d]",
+	return [NSString stringWithFormat:@"KivaLoan[loanId = %d, name = %@, status = %ld, fundedAmount = %d, basketAmount = %d, image = %@, activity = %@, sector = %@, use = %@, theme = %@, location = %@, partnerId = %d, postedDate = %@, plannedEndDate = %@, loanAmount = %d, borrowerCount = %d, lenderCount = %d, video = %@]",
 			[_loanId intValue],
 			_name,
 			_status,
@@ -122,7 +125,8 @@ static const NSString *kRefuned			= @"refunded";
 			_plannedExpirationDate,
 			[_loanAmount intValue],
 			[_borrowerCount intValue],
-			[_lenderCount intValue]];
+			[_lenderCount intValue],
+			_video];
 			
 }
 
