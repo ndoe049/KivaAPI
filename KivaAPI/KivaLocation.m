@@ -36,4 +36,12 @@ static const NSString *kCoordinate	= @"pairs";
 	return self;
 }
 
+- (NSString *)description {
+	return [NSString stringWithFormat:@"KivaLocation[countryCode = %@, country = %@, town = %@, coordinate = %@]",
+			_countryCode,
+			_country,
+			_town,
+			_coordinate];
+}
+
 @end

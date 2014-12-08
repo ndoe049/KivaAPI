@@ -13,6 +13,7 @@
 @interface MasterViewController ()
 
 @property NSMutableArray *objects;
+
 @end
 
 @implementation MasterViewController
@@ -23,36 +24,30 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-	self.navigationItem.leftBarButtonItem = self.editButtonItem;
-
-	UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-	self.navigationItem.rightBarButtonItem = addButton;
+	
+	_objects = [[NSMutableArray alloc] init];
 	
 	KivaLoanRequest *request = [KivaLoanRequest newestLoans];
 	[KivaRequestManager sendLoanRequest:request withCompletionHandler:^(BOOL success, NSArray *loans, NSError *error) {
 		if (success) {
+			[_objects removeAllObjects];
 			for (KivaLoan *loan in loans) {
+				[_objects addObject:loan];
 				NSLog(@"%@", loan);
 			}
+			
+			[self.tableView reloadData];
 		} else {
 			NSLog(@"%@", error);
 		}
 	}];
+	
+	
 }
 
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];
 	// Dispose of any resources that can be recreated.
-}
-
-- (void)insertNewObject:(id)sender {
-	if (!self.objects) {
-	    self.objects = [[NSMutableArray alloc] init];
-	}
-	[self.objects insertObject:[NSDate date] atIndex:0];
-	NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-	[self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 #pragma mark - Segues
@@ -78,8 +73,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
-	NSDate *object = self.objects[indexPath.row];
-	cell.textLabel.text = [object description];
+	KivaLoan *object = self.objects[indexPath.row];
+	cell.textLabel.text = [object name];
+	cell.detailTextLabel.text = [[object loanAmount] stringValue];
 	return cell;
 }
 

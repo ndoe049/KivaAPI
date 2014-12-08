@@ -8,6 +8,7 @@
 
 #import "KivaLoan.h"
 #import "KivaLocation.h"
+#import "KivaImage.h"
 
 static const NSString *kLoanId			= @"id";
 static const NSString *kName			= @"name";
@@ -17,7 +18,6 @@ static const NSString *kStatus			= @"status";
 static const NSString *kFundedAmount	= @"funded_amount";
 static const NSString *kBasketAmount	= @"basket_amount";
 static const NSString *kImage			= @"image";
-static const NSString *kImageId			= @"id";
 static const NSString *kActivity		= @"activity";
 static const NSString *kSector			= @"sector";
 static const NSString *kUse				= @"use";
@@ -56,14 +56,7 @@ static const NSString *kRefuned			= @"refunded";
 		_status = [KivaLoan loanStatusFromString:[dictionary objectForKey:kStatus]];
 		_fundedAmount = [NSNumber numberWithLong:[[dictionary objectForKey:kFundedAmount] longLongValue]];
 		_basketAmount = [NSNumber numberWithLong:[[dictionary objectForKey:kBasketAmount] longLongValue]];
-		
-		NSDictionary *imageInfo = [dictionary objectForKey:kImage];
-		if (imageInfo) {
-			_imageId = [NSNumber numberWithLong:[[imageInfo objectForKey:kImageId] longLongValue]];
-		} else {
-			_imageId = [[NSNumber alloc] init];
-		}
-		
+		_image = [[KivaImage alloc] initWithDictionary:[dictionary objectForKey:kImage]];
 		_activity = [dictionary objectForKey:kActivity];
 		_sector = [dictionary objectForKey:kSector];
 		_use = [dictionary objectForKey:kUse];
@@ -72,7 +65,7 @@ static const NSString *kRefuned			= @"refunded";
 		_partnerId = [[NSNumber alloc] initWithLong:[[dictionary objectForKey:kPartnerId] longValue]];
 		
 		NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-		[formatter setDateFormat:@"yyyy-MM-ddTHH:mm:ssZ"];
+		[formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
 		_postedDate = [formatter dateFromString:[dictionary objectForKey:kPostedDate]];
 		_plannedExpirationDate = [formatter dateFromString:[dictionary objectForKey:kPlannedEndDate]];
 		
@@ -112,13 +105,13 @@ static const NSString *kRefuned			= @"refunded";
 }
 
 - (NSString *)description {
-	return [NSString stringWithFormat:@"KivaLoan[loanId = %d, name = %@, status = %ld, fundedAmount = %d, basketAmount = %d, imageId = %d, activity = %@, sector = %@, use = %@, theme = %@, location = %@, partnerId = %d, postedDate = %@, plannedEndDate = %@, loanAmount = %d, borrowerCount = %d, lenderCount = %d]",
+	return [NSString stringWithFormat:@"KivaLoan[loanId = %d, name = %@, status = %ld, fundedAmount = %d, basketAmount = %d, image = %@, activity = %@, sector = %@, use = %@, theme = %@, location = %@, partnerId = %d, postedDate = %@, plannedEndDate = %@, loanAmount = %d, borrowerCount = %d, lenderCount = %d]",
 			[_loanId intValue],
 			_name,
 			_status,
 			[_fundedAmount intValue],
 			[_basketAmount intValue],
-			[_imageId intValue],
+			_image,
 			_activity,
 			_sector,
 			_use,

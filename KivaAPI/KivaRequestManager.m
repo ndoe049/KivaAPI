@@ -15,6 +15,8 @@ static NSString *applcationId	= @"";
 
 @implementation KivaRequestManager
 
+#pragma mark - Loan Requests
+
 + (void)sendLoanRequest:(KivaLoanRequest *)request withCompletionHandler:(loanRequestCompletionHandler)completionHandler {
 	[NSURLConnection sendAsynchronousRequest:[request urlRequest]queue:[NSOperationQueue mainQueue]
 						   completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
@@ -45,6 +47,22 @@ static NSString *applcationId	= @"";
 								   }
 							   }
 	
+	}];
+}
+
+#pragma mark - Image Requests
+
++ (void)fetchImage:(KivaImage *)image forSize:(ImageSize)size withCompletionHandler:(imageRequestCompletionHandler)completionHandler {
+	[NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[image urlForImageSize:size]]]
+									   queue:[NSOperationQueue mainQueue]
+						   completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+							   if (connectionError) {
+								   completionHandler(NO, nil, connectionError);
+							   } else if (!response) {
+								   completionHandler(NO, nil, nil);
+							   } else {
+								   completionHandler(YES, [UIImage imageWithData:data], nil);
+							   }
 	}];
 }
 
