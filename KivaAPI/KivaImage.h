@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "FromJSON.h"
 
 typedef NS_ENUM(NSInteger, ImageSize) {
 	SQUARE_80,
@@ -17,12 +18,11 @@ typedef NS_ENUM(NSInteger, ImageSize) {
 	FULLSIZE
 };
 
-@interface KivaImage : NSObject
+@interface KivaImage : NSObject <FromJSON>
 
 @property (nonatomic, readonly) NSNumber *imageId;
 @property (nonatomic, readonly) NSNumber *templateId;
 
-- (id)initWithDictionary:(NSDictionary *)dictionary;
 - (NSString *)urlForImageSize:(ImageSize)size;
 
 @end

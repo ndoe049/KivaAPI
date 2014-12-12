@@ -27,21 +27,25 @@
 	
 	_objects = [[NSMutableArray alloc] init];
 	
-	KivaLoanRequest *request = [KivaLoanRequest newestLoans];
-	[KivaRequestManager sendLoanRequest:request withCompletionHandler:^(BOOL success, NSArray *loans, NSError *error) {
-		if (success) {
-			[_objects removeAllObjects];
-			for (KivaLoan *loan in loans) {
-				[_objects addObject:loan];
-				NSLog(@"%@", loan);
-			}
-			
-			[self.tableView reloadData];
-		} else {
-			NSLog(@"%@", error);
-		}
-	}];
+//	KivaLoanRequest *request = [KivaLoanRequest newestLoans];
+//	[KivaRequestManager sendLoanRequest:request withCompletionHandler:^(BOOL success, NSArray *loans, NSError *error) {
+//		if (success) {
+//			[_objects removeAllObjects];
+//			for (KivaLoan *loan in loans) {
+//				[_objects addObject:loan];
+//				NSLog(@"%@", loan);
+//			}
+//			
+//			[self.tableView reloadData];
+//		} else {
+//			NSLog(@"%@", error);
+//		}
+//	}];
 	
+	KivaLoanRequest *request = [KivaLoanRequest multipleLoanDetails:[NSArray arrayWithObjects:@"2930", @"2931", nil]];
+	[KivaRequestManager sendLoanRequest:request withCompletionHandler:^(BOOL success, NSArray *loans, NSError *error) {
+	
+	}];
 	
 }
 

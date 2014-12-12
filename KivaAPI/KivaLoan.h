@@ -9,6 +9,7 @@
 
 
 #import <Foundation/Foundation.h>
+#import "FromJSON.h"
 
 @class KivaLocation, KivaImage, KivaVideo;
 
@@ -21,7 +22,7 @@ typedef NS_ENUM(NSInteger, LoanStatus) {
 	REFUNDED
 };
 
-@interface KivaLoan : NSObject
+@interface KivaLoan : NSObject <FromJSON>
 
 @property (nonatomic, readonly) NSNumber *loanId;
 @property (nonatomic, readonly) NSString *name;
@@ -45,8 +46,15 @@ typedef NS_ENUM(NSInteger, LoanStatus) {
 @property (nonatomic, readonly) NSArray *tags;
 @property (nonatomic, readonly) KivaVideo *video;
 
+@property (nonatomic, readonly) NSArray *borrowers;
+@property (nonatomic, readonly) NSString *descriptionText;
+@property (nonatomic, readonly) NSNumber *journalEntries;
+@property (nonatomic, readonly) NSArray *payments;
+
+@property (nonatomic, getter = isDetailed) BOOL detailed;
+
 + (LoanStatus)loanStatusFromString:(NSString *)value;
 
-- (id)initWithDictionary:(NSDictionary *)dictionary;
+- (id)initWithDictionary:(NSDictionary *)dictionary detailed:(BOOL)detailed;
 
 @end

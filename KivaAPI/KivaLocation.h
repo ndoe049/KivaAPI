@@ -8,14 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import "FromJSON.h"
 
-@interface KivaLocation : NSObject
+@interface KivaLocation : NSObject <FromJSON>
 
 @property (nonatomic, readonly) NSString *countryCode;
 @property (nonatomic, readonly) NSString *country;
 @property (nonatomic, readonly) NSString *town;
 @property (nonatomic, readonly) CLLocation *coordinate;
-
-- (id)initWithDictionary:(NSDictionary *)dictionary;
 
 @end

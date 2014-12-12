@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "FromJSON.h"
 
-@interface KivaVideo : NSObject
+@interface KivaVideo : NSObject <FromJSON>
 
 @property (nonatomic, readonly) NSNumber *videoId;
 
@@ -16,7 +17,5 @@
 //	for information on how to embed, present, or otherwise handle video in your application.
 //	Currently all video at Kiva is hosted by YouTube.
 @property (nonatomic, readonly) NSString *youtubeId;
-
-- (id)initWithDictionary:(NSDictionary *)dictionary;
 
 @end

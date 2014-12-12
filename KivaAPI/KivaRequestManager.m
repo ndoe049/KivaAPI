@@ -18,7 +18,7 @@ static NSString *applcationId	= @"";
 #pragma mark - Loan Requests
 
 + (void)sendLoanRequest:(KivaLoanRequest *)request withCompletionHandler:(loanRequestCompletionHandler)completionHandler {
-	[NSURLConnection sendAsynchronousRequest:[request urlRequest]queue:[NSOperationQueue mainQueue]
+	[NSURLConnection sendAsynchronousRequest:[request urlRequest] queue:[NSOperationQueue mainQueue]
 						   completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
 							   if (connectionError) {
 								   completionHandler(NO, nil, connectionError);
@@ -38,7 +38,7 @@ static NSString *applcationId	= @"";
 									   NSMutableArray *values = [[NSMutableArray alloc] init];
 									   
 									   for (NSDictionary *d in loanDictionaries) {
-										   [values addObject:[[KivaLoan	alloc] initWithDictionary:d]];
+										   [values addObject:[[KivaLoan	alloc] initWithDictionary:d detailed:[request requestType] == kLoanDetails]];
 									   }
 									   
 									   completionHandler(YES, [NSArray arrayWithArray:values], nil);
@@ -70,11 +70,15 @@ static NSString *applcationId	= @"";
 
 + (NSError *)errorsForJSON:(NSDictionary *)jsonDictionary {
 	if (jsonDictionary && (id)jsonDictionary != [NSNull null]) {
-		NSArray *errors = [jsonDictionary objectForKey:@"errors"];
-		if (errors) {
+		NSString *code = [jsonDictionary objectForKey:@"code"];
+		NSString *message = [jsonDictionary objectForKey:@"message"];
+		if (code || message) {
+			NSString *fullError = [code stringByAppendingFormat:@" : %@", message];
+			NSLog(@"%@", fullError);
+			
 			NSError *error = [[NSError alloc] initWithDomain:@"KivaRequestManager"
 														code:1
-													userInfo:@{NSLocalizedDescriptionKey: [errors firstObject]}];
+													userInfo:@{NSLocalizedDescriptionKey: fullError}];
 			return error;
 		}
 	}

@@ -22,6 +22,8 @@
 		6C69135F1A35037A0012D6B1 /* KivaLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C69135D1A35037A0012D6B1 /* KivaLocation.m */; };
 		6C6913661A35D34E0012D6B1 /* KivaImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6913651A35D34E0012D6B1 /* KivaImage.m */; };
 		6C6913691A35E2120012D6B1 /* KivaVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6913681A35E2120012D6B1 /* KivaVideo.m */; };
+		6C6C12781A3B57E700A1F849 /* KivaBorrower.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6C12771A3B57E700A1F849 /* KivaBorrower.m */; };
+		6C6C127C1A3B619A00A1F849 /* KivaPayment.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6C127B1A3B619A00A1F849 /* KivaPayment.m */; };
 		7B6BA9BEC15A992266111DB4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A16F67132B4942D0AF51772 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +70,11 @@
 		6C6913651A35D34E0012D6B1 /* KivaImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KivaImage.m; sourceTree = "<group>"; };
 		6C6913671A35E2120012D6B1 /* KivaVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KivaVideo.h; sourceTree = "<group>"; };
 		6C6913681A35E2120012D6B1 /* KivaVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KivaVideo.m; sourceTree = "<group>"; };
+		6C6C12761A3B57E700A1F849 /* KivaBorrower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KivaBorrower.h; sourceTree = "<group>"; };
+		6C6C12771A3B57E700A1F849 /* KivaBorrower.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KivaBorrower.m; sourceTree = "<group>"; };
+		6C6C12791A3B585800A1F849 /* FromJSON.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FromJSON.h; sourceTree = "<group>"; };
+		6C6C127A1A3B619A00A1F849 /* KivaPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KivaPayment.h; sourceTree = "<group>"; };
+		6C6C127B1A3B619A00A1F849 /* KivaPayment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KivaPayment.m; sourceTree = "<group>"; };
 		873BD814C56A3779AF4B979B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -212,6 +219,7 @@
 		6C69134F1A35033F0012D6B1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6C6C12791A3B585800A1F849 /* FromJSON.h */,
 				6C69135A1A35037A0012D6B1 /* KivaLoan.h */,
 				6C69135B1A35037A0012D6B1 /* KivaLoan.m */,
 				6C69135C1A35037A0012D6B1 /* KivaLocation.h */,
@@ -220,6 +228,10 @@
 				6C6913651A35D34E0012D6B1 /* KivaImage.m */,
 				6C6913671A35E2120012D6B1 /* KivaVideo.h */,
 				6C6913681A35E2120012D6B1 /* KivaVideo.m */,
+				6C6C12761A3B57E700A1F849 /* KivaBorrower.h */,
+				6C6C12771A3B57E700A1F849 /* KivaBorrower.m */,
+				6C6C127A1A3B619A00A1F849 /* KivaPayment.h */,
+				6C6C127B1A3B619A00A1F849 /* KivaPayment.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -368,12 +380,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C6C127C1A3B619A00A1F849 /* KivaPayment.m in Sources */,
 				6C6913561A35036D0012D6B1 /* KivaLoanRequest.m in Sources */,
 				6C6913521A3503580012D6B1 /* KivaAuthManager.m in Sources */,
 				6C6913661A35D34E0012D6B1 /* KivaImage.m in Sources */,
 				6C69135E1A35037A0012D6B1 /* KivaLoan.m in Sources */,
 				6C6913281A3503050012D6B1 /* AppDelegate.m in Sources */,
 				6C69132B1A3503050012D6B1 /* MasterViewController.m in Sources */,
+				6C6C12781A3B57E700A1F849 /* KivaBorrower.m in Sources */,
 				6C6913251A3503050012D6B1 /* main.m in Sources */,
 				6C6913591A3503740012D6B1 /* KivaRequestManager.m in Sources */,
 				6C6913691A35E2120012D6B1 /* KivaVideo.m in Sources */,

@@ -11,3 +11,7 @@
 #import "KivaRequestManager.h"
 #import "KivaLoan.h"
 #import "KivaLocation.h"
+#import "KivaImage.h"
+#import "KivaVideo.h"
+#import "KivaBorrower.h"
+#import "KivaPayment.h"

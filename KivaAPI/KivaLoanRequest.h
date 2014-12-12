@@ -9,14 +9,19 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, LoanRequestType) {
-	kNewestLoansRequest
+	kNewestLoansRequest,
+	kLoanDetails
 };
 
-@interface KivaLoanRequest : NSObject
+@interface KivaLoanRequest : NSObject {
+	NSMutableArray *objects;
+}
 
-@property (nonatomic) LoanRequestType requestType;
+@property (nonatomic, readonly) LoanRequestType requestType;
 
 + (instancetype)newestLoans;
++ (instancetype)loanDetails:(NSNumber *)loanId;
++ (instancetype)multipleLoanDetails:(NSArray *)loanIds;
 
 - (NSURLRequest *)urlRequest;
 
