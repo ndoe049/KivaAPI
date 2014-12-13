@@ -9,7 +9,8 @@
 #import "KivaRequestManager.h"
 #import "KivaLoan.h"
 
-static const NSString *kLoans	= @"loans";
+static const NSString *kLoans		= @"loans";
+static const NSString *kPartners	= @"partners";
 
 static NSString *applcationId	= @"";
 
@@ -62,6 +63,41 @@ static NSString *applcationId	= @"";
 								   completionHandler(NO, nil, nil);
 							   } else {
 								   completionHandler(YES, [UIImage imageWithData:data], nil);
+							   }
+	}];
+}
+
+#pragma mark - Partner Requests
+
++ (void)sendPartnerRequest:(KivaPartnerRequest *)request withCompletionHandler:(partnerRequestCompletionHandler)completionHandler {
+	[NSURLConnection sendAsynchronousRequest:[request urlRequest]queue:[NSOperationQueue mainQueue]
+						   completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+							   if (connectionError) {
+								   completionHandler(NO, nil, connectionError);
+							   } else if (!response) {
+								   completionHandler(NO, nil, nil);
+							   } else {
+								   NSError *jsonError = nil;
+								   NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:data
+																								  options:NSJSONReadingAllowFragments
+																									error:&jsonError];
+								   if ([jsonDictionary isKindOfClass:[NSDictionary class]]) {
+									   jsonError = [self errorsForJSON:jsonDictionary];
+								   }
+								   
+								   if (!jsonError) {
+									   NSArray *loanDictionaries = [jsonDictionary objectForKey:kPartners];
+									   NSMutableArray *values = [[NSMutableArray alloc] init];
+									   
+									   for (NSDictionary *d in loanDictionaries) {
+										   //TODO add partners
+									   }
+									   
+									   completionHandler(YES, [NSArray arrayWithArray:values], nil);
+								   } else {
+									   completionHandler(NO, nil, jsonError);
+								   }
+
 							   }
 	}];
 }

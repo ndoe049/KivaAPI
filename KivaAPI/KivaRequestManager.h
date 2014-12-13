@@ -9,10 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIImage.h>
 #import "KivaLoanRequest.h"
+#import "KivaPartnerRequest.h"
 #import "KivaImage.h"
 
 typedef void (^loanRequestCompletionHandler)(BOOL success, NSArray *loans, NSError *error);
 typedef void (^imageRequestCompletionHandler)(BOOL success, UIImage *image, NSError *error);
+typedef void (^partnerRequestCompletionHandler)(BOOL success, NSArray *partners, NSError *error);
 
 @interface KivaRequestManager : NSObject
 
@@ -23,6 +25,9 @@ typedef void (^imageRequestCompletionHandler)(BOOL success, UIImage *image, NSEr
 //Image Requests (could use SDWebImage or something similar also)
 + (void)fetchImage:(KivaImage *)image forSize:(ImageSize)size
 	withCompletionHandler:(imageRequestCompletionHandler)completionHandler;
+
++ (void)sendPartnerRequest:(KivaPartnerRequest *)request
+	 withCompletionHandler:(partnerRequestCompletionHandler)completionHandler;
 
 + (void)addAppId:(NSString *)appId;
 + (NSString *)appID;
