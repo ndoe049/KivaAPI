@@ -12,44 +12,56 @@
 #import "KivaVideo.h"
 #import "KivaBorrower.h"
 #import "KivaPayment.h"
+#import "KivaLocalPayment.h"
+#import "KivaLossLiability.h"
+#import "KivaScheduledPayment.h"
 
-static const NSString *kLoanId			= @"id";
-static const NSString *kName			= @"name";
-static const NSString *kDescription		= @"description";
-static const NSString *kLanguages		= @"languages";
-static const NSString *kStatus			= @"status";
-static const NSString *kFundedAmount	= @"funded_amount";
-static const NSString *kBasketAmount	= @"basket_amount";
-static const NSString *kImage			= @"image";
-static const NSString *kActivity		= @"activity";
-static const NSString *kSector			= @"sector";
-static const NSString *kUse				= @"use";
-static const NSString *kTheme			= @"theme";
-static const NSString *kLocation		= @"location";
-static const NSString *kPartnerId		= @"partner_id";
-static const NSString *kPostedDate		= @"posted_date";
-static const NSString *kPlannedEndDate	= @"planned_expiration_date";
-static const NSString *kLoanAmount		= @"loan_amount";
-static const NSString *kBorrowerCount	= @"borrower_count";
-static const NSString *kLenderCount		= @"lender_count";
-static const NSString *kBonusCredit		= @"bonus_credit_eligibility";
-static const NSString *kTags			= @"tags";
-static const NSString *kVideo			= @"video";
+static const NSString *kLoanId				= @"id";
+static const NSString *kName				= @"name";
+static const NSString *kDescription			= @"description";
+static const NSString *kLanguages			= @"languages";
+static const NSString *kStatus				= @"status";
+static const NSString *kFundedAmount		= @"funded_amount";
+static const NSString *kBasketAmount		= @"basket_amount";
+static const NSString *kImage				= @"image";
+static const NSString *kActivity			= @"activity";
+static const NSString *kSector				= @"sector";
+static const NSString *kUse					= @"use";
+static const NSString *kTheme				= @"theme";
+static const NSString *kLocation			= @"location";
+static const NSString *kPartnerId			= @"partner_id";
+static const NSString *kPostedDate			= @"posted_date";
+static const NSString *kPlannedEndDate		= @"planned_expiration_date";
+static const NSString *kLoanAmount			= @"loan_amount";
+static const NSString *kBorrowerCount		= @"borrower_count";
+static const NSString *kLenderCount			= @"lender_count";
+static const NSString *kBonusCredit			= @"bonus_credit_eligibility";
+static const NSString *kTags				= @"tags";
+static const NSString *kVideo				= @"video";
 
 //Detailed Fields
-static const NSString *kBorrowers		= @"borrowers";
-static const NSString *kDescriptionText	= @"texts";
-static const NSString *kJournalTotals	= @"journal_totals";
-static const NSString *kJournalEntries	= @"entries";
-static const NSString *kPayments		= @"payments";
+static const NSString *kBorrowers			= @"borrowers";
+static const NSString *kDescriptionText		= @"texts";
+static const NSString *kJournalTotals		= @"journal_totals";
+static const NSString *kJournalEntries		= @"entries";
+static const NSString *kPayments			= @"payments";
+static const NSString *kTerms				= @"terms";
+static const NSString *kDisbursalAmount		= @"disbursal_amount";
+static const NSString *kDisbursalCurrency	= @"disbursal_currency";
+static const NSString *kDisbursalDate		= @"disbursal_date";
+static const NSString *kLocalPayments		= @"local_payments";
+static const NSString *kLossLiability		= @"loss_liability";
+static const NSString *kRepaymentInterval	= @"repayment_interval";
+static const NSString *kRepaymentTerm		= @"repayment_term";
+static const NSString *kScheduledPayments	= @"scheduled_payments";
 
 //Loan Status Values
-static const NSString *kFundraising		= @"fundraising";
-static const NSString *kFunded			= @"funded";
-static const NSString *kInRepayment		= @"in_repayment";
-static const NSString *kPaid			= @"paid";
-static const NSString *kDefaulted		= @"defaulted";
-static const NSString *kRefuned			= @"refunded";
+static const NSString *kFundraising			= @"fundraising";
+static const NSString *kFunded				= @"funded";
+static const NSString *kInRepayment			= @"in_repayment";
+static const NSString *kPaid				= @"paid";
+static const NSString *kDefaulted			= @"defaulted";
+static const NSString *kRefuned				= @"refunded";
 
 @implementation KivaLoan
 
@@ -132,6 +144,36 @@ static const NSString *kRefuned			= @"refunded";
 	
 	_payments = [NSArray arrayWithArray:paymentValues];
 	
+	NSDictionary *terms = [dictionary objectForKey:kTerms];
+	_disbursalAmount = [NSNumber numberWithFloat:[[terms objectForKey:kDisbursalAmount] floatValue]];
+	_disbursalCurrency = [terms objectForKey:kDisbursalCurrency];
+	_disbursalDate = [formatter dateFromString:[terms objectForKey:kDisbursalDate]];
+
+	NSArray *lPayments = [terms objectForKey:kLocalPayments];
+	NSMutableArray *lPaymentValues = [[NSMutableArray alloc] init];
+	
+	if (lPayments) {
+		for (NSDictionary *d in lPayments) {
+			[lPaymentValues addObject:[[KivaLocalPayment alloc] initWithDictionary:d]];
+		}
+	}
+	
+	_localPayments = [NSArray arrayWithArray:lPaymentValues];
+	_lossLiability = [[KivaLossLiability alloc] initWithDictionary:[terms objectForKey:kLossLiability]];
+	_repaymentInterval = [terms objectForKey:kRepaymentInterval];
+	_repaymentTerm = [NSNumber numberWithInt:[[terms objectForKey:kRepaymentTerm] intValue]];
+	
+	NSArray *scheduled = [terms objectForKey:kScheduledPayments];
+	NSMutableArray *scheduledValues = [[NSMutableArray alloc] init];
+	
+	if (scheduled) {
+		for (NSDictionary *d in scheduled) {
+			[scheduledValues addObject:[[KivaScheduledPayment alloc] initWithDictionary:d]];
+		}
+	}
+	
+	_scheduledPayments = [NSArray arrayWithArray:scheduledValues];
+	
 	return self;
 }
 
@@ -174,7 +216,7 @@ static const NSString *kRefuned			= @"refunded";
 				_video];
 	}
 	
-	return [NSString stringWithFormat:@"KivaLoan[loanId = %d, name = %@, status = %ld, fundedAmount = %d, basketAmount = %d, image = %@, activity = %@, sector = %@, use = %@, theme = %@, location = %@, partnerId = %d, postedDate = %@, plannedEndDate = %@, loanAmount = %d, borrowerCount = %d, lenderCount = %d, video = %@, detailed = %d, borrowers = %@, descriptionText = %@, journalEntries = %d, payments = %@]",
+	return [NSString stringWithFormat:@"KivaLoan[loanId = %d, name = %@, status = %ld, fundedAmount = %d, basketAmount = %d, image = %@, activity = %@, sector = %@, use = %@, theme = %@, location = %@, partnerId = %d, postedDate = %@, plannedEndDate = %@, loanAmount = %d, borrowerCount = %d, lenderCount = %d, video = %@, detailed = %d, borrowers = %@, descriptionText = %@, journalEntries = %d, payments = %@, disbursalAmount = %f, disbursalCurrency = %@, disbursalDate = %@, localPayments = %@, lossLiability = %@, repaymentInterval = %@, repaymentTerm = %d, scheduledPayments = %@]",
 			[_loanId intValue],
 			_name,
 			_status,
@@ -197,7 +239,15 @@ static const NSString *kRefuned			= @"refunded";
 			_borrowers,
 			_descriptionText,
 			[_journalEntries intValue],
-			_payments];
+			_payments,
+			[_disbursalAmount floatValue],
+			_disbursalCurrency,
+			_disbursalDate,
+			_localPayments,
+			_lossLiability,
+			_repaymentInterval,
+			[_repaymentTerm intValue],
+			_scheduledPayments];
 }
 
 @end

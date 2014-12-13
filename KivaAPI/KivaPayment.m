@@ -14,7 +14,7 @@ static const NSString *kCurrencyExchange	= @"currency_exchange_loss_amount";
 static const NSString *kLocalAmount			= @"local_amount";
 static const NSString *kPaymentId			= @"payment_id";
 static const NSString *kProccessedDate		= @"processed_date";
-static const NSString *kRounedLocalAmount	= @"rouned_local_amount";
+static const NSString *kRounedLocalAmount	= @"rounded_local_amount";
 static const NSString *kSettlementDate		= @"settlement_date";
 
 @implementation KivaPayment

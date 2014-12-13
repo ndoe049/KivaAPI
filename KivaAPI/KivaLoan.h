@@ -11,7 +11,7 @@
 #import <Foundation/Foundation.h>
 #import "FromJSON.h"
 
-@class KivaLocation, KivaImage, KivaVideo;
+@class KivaLocation, KivaImage, KivaVideo, KivaLossLiability;
 
 typedef NS_ENUM(NSInteger, LoanStatus) {
 	FUNDRAISING,
@@ -50,7 +50,14 @@ typedef NS_ENUM(NSInteger, LoanStatus) {
 @property (nonatomic, readonly) NSString *descriptionText;
 @property (nonatomic, readonly) NSNumber *journalEntries;
 @property (nonatomic, readonly) NSArray *payments;
-
+@property (nonatomic, readonly) NSNumber *disbursalAmount;
+@property (nonatomic, readonly) NSNumber *disbursalCurrency;
+@property (nonatomic, readonly) NSDate *disbursalDate;
+@property (nonatomic, readonly) NSArray *localPayments;
+@property (nonatomic, readonly) KivaLossLiability *lossLiability;
+@property (nonatomic, readonly) NSString *repaymentInterval;
+@property (nonatomic, readonly) NSNumber *repaymentTerm;
+@property (nonatomic, readonly) NSArray *scheduledPayments;
 @property (nonatomic, getter = isDetailed) BOOL detailed;
 
 + (LoanStatus)loanStatusFromString:(NSString *)value;

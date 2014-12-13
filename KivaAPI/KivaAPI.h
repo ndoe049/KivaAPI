@@ -15,3 +15,7 @@
 #import "KivaVideo.h"
 #import "KivaBorrower.h"
 #import "KivaPayment.h"
+#import "KivaLocalPayment.h"
+#import "KivaLossLiability.h"
+#import "KivaScheduledPayment.h"
+#import "KivaPartnerRequest.h"

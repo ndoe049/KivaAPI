@@ -24,6 +24,10 @@
 		6C6913691A35E2120012D6B1 /* KivaVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6913681A35E2120012D6B1 /* KivaVideo.m */; };
 		6C6C12781A3B57E700A1F849 /* KivaBorrower.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6C12771A3B57E700A1F849 /* KivaBorrower.m */; };
 		6C6C127C1A3B619A00A1F849 /* KivaPayment.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6C127B1A3B619A00A1F849 /* KivaPayment.m */; };
+		6C6C127F1A3B6B5000A1F849 /* KivaLocalPayment.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6C127E1A3B6B5000A1F849 /* KivaLocalPayment.m */; };
+		6CC3ED761A3CDF5D00F49BE2 /* KivaLossLiability.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC3ED751A3CDF5D00F49BE2 /* KivaLossLiability.m */; };
+		6CC3ED791A3CE41E00F49BE2 /* KivaScheduledPayment.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC3ED781A3CE41E00F49BE2 /* KivaScheduledPayment.m */; };
+		6CC3ED7D1A3CE6A200F49BE2 /* KivaPartnerRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC3ED7C1A3CE6A200F49BE2 /* KivaPartnerRequest.m */; };
 		7B6BA9BEC15A992266111DB4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A16F67132B4942D0AF51772 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +79,14 @@
 		6C6C12791A3B585800A1F849 /* FromJSON.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FromJSON.h; sourceTree = "<group>"; };
 		6C6C127A1A3B619A00A1F849 /* KivaPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KivaPayment.h; sourceTree = "<group>"; };
 		6C6C127B1A3B619A00A1F849 /* KivaPayment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KivaPayment.m; sourceTree = "<group>"; };
+		6C6C127D1A3B6B5000A1F849 /* KivaLocalPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KivaLocalPayment.h; sourceTree = "<group>"; };
+		6C6C127E1A3B6B5000A1F849 /* KivaLocalPayment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KivaLocalPayment.m; sourceTree = "<group>"; };
+		6CC3ED741A3CDF5D00F49BE2 /* KivaLossLiability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KivaLossLiability.h; sourceTree = "<group>"; };
+		6CC3ED751A3CDF5D00F49BE2 /* KivaLossLiability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KivaLossLiability.m; sourceTree = "<group>"; };
+		6CC3ED771A3CE41E00F49BE2 /* KivaScheduledPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KivaScheduledPayment.h; sourceTree = "<group>"; };
+		6CC3ED781A3CE41E00F49BE2 /* KivaScheduledPayment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KivaScheduledPayment.m; sourceTree = "<group>"; };
+		6CC3ED7B1A3CE6A200F49BE2 /* KivaPartnerRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KivaPartnerRequest.h; sourceTree = "<group>"; };
+		6CC3ED7C1A3CE6A200F49BE2 /* KivaPartnerRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KivaPartnerRequest.m; sourceTree = "<group>"; };
 		873BD814C56A3779AF4B979B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -202,6 +214,7 @@
 		6C69134D1A3503270012D6B1 /* Request */ = {
 			isa = PBXGroup;
 			children = (
+				6CC3ED7A1A3CE69100F49BE2 /* Partner */,
 				6C6913531A3503600012D6B1 /* Loan */,
 			);
 			name = Request;
@@ -232,6 +245,12 @@
 				6C6C12771A3B57E700A1F849 /* KivaBorrower.m */,
 				6C6C127A1A3B619A00A1F849 /* KivaPayment.h */,
 				6C6C127B1A3B619A00A1F849 /* KivaPayment.m */,
+				6C6C127D1A3B6B5000A1F849 /* KivaLocalPayment.h */,
+				6C6C127E1A3B6B5000A1F849 /* KivaLocalPayment.m */,
+				6CC3ED741A3CDF5D00F49BE2 /* KivaLossLiability.h */,
+				6CC3ED751A3CDF5D00F49BE2 /* KivaLossLiability.m */,
+				6CC3ED771A3CE41E00F49BE2 /* KivaScheduledPayment.h */,
+				6CC3ED781A3CE41E00F49BE2 /* KivaScheduledPayment.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -243,6 +262,15 @@
 				6C6913551A35036D0012D6B1 /* KivaLoanRequest.m */,
 			);
 			name = Loan;
+			sourceTree = "<group>";
+		};
+		6CC3ED7A1A3CE69100F49BE2 /* Partner */ = {
+			isa = PBXGroup;
+			children = (
+				6CC3ED7B1A3CE6A200F49BE2 /* KivaPartnerRequest.h */,
+				6CC3ED7C1A3CE6A200F49BE2 /* KivaPartnerRequest.m */,
+			);
+			name = Partner;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -386,11 +414,15 @@
 				6C6913661A35D34E0012D6B1 /* KivaImage.m in Sources */,
 				6C69135E1A35037A0012D6B1 /* KivaLoan.m in Sources */,
 				6C6913281A3503050012D6B1 /* AppDelegate.m in Sources */,
+				6CC3ED761A3CDF5D00F49BE2 /* KivaLossLiability.m in Sources */,
 				6C69132B1A3503050012D6B1 /* MasterViewController.m in Sources */,
 				6C6C12781A3B57E700A1F849 /* KivaBorrower.m in Sources */,
 				6C6913251A3503050012D6B1 /* main.m in Sources */,
 				6C6913591A3503740012D6B1 /* KivaRequestManager.m in Sources */,
+				6CC3ED791A3CE41E00F49BE2 /* KivaScheduledPayment.m in Sources */,
+				6CC3ED7D1A3CE6A200F49BE2 /* KivaPartnerRequest.m in Sources */,
 				6C6913691A35E2120012D6B1 /* KivaVideo.m in Sources */,
+				6C6C127F1A3B6B5000A1F849 /* KivaLocalPayment.m in Sources */,
 				6C69135F1A35037A0012D6B1 /* KivaLocation.m in Sources */,
 				6C69132E1A3503050012D6B1 /* DetailViewController.m in Sources */,
 			);
