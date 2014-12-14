@@ -9,10 +9,11 @@
 #import "KivaLoanRequest.h"
 #import "KivaRequestManager.h"
 
-static const NSString *apiUrlString		= @"http://api.kivaws.org/v1/loans/";
-static const NSString *newestApiPath	= @"newest";
-static const NSString *jsonFormat		= @"json";
-static const NSString *appId			= @"app_id";
+static const NSString *kApiUrlString	= @"http://api.kivaws.org/v1/loans/";
+static const NSString *kNewestApiPath	= @"newest";
+static const NSString *kJsonFormat		= @"json";
+static const NSString *kAppId			= @"app_id";
+static const NSString *kLenders			= @"lenders";
 
 @implementation KivaLoanRequest
 
@@ -32,49 +33,52 @@ static const NSString *appId			= @"app_id";
 }
 
 - (NSURLRequest *)urlRequest {
+	NSURLRequest *request = nil;
 	switch ([self requestType]) {
-		case kNewestLoansRequest:
-			return [self newestLoansRequestUrl];
+		case NEWEST_LOANS:
+			request = [self newestLoansRequestUrl];
 			break;
-		case kLoanDetails:
-			return [self loanDetailsRequestUrl];
+		case LOAN_DETAILS:
+			request = [self loanDetailsRequestUrl];
 			break;
 		default:
 			break;
 	}
 	
-	return nil;
+	return request;
 }
 
 #pragma mark - NSURLRequestConstruction methods 
 
 - (NSURLRequest *)newestLoansRequestUrl {
 	if ([[KivaRequestManager appID] isEqualToString:@""]) {
-		return [self urlRequestFromString:[apiUrlString stringByAppendingFormat:@"%@.%@",
-										   newestApiPath,
-										   jsonFormat]];
+		return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@.%@",
+										   kNewestApiPath,
+										   kJsonFormat]];
 	}
 	
-	return [self urlRequestFromString:[apiUrlString stringByAppendingFormat:@"%@.%@?%@=%@",
-									   newestApiPath,
-									   jsonFormat,
-									   appId,
+	return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@.%@?%@=%@",
+									   kNewestApiPath,
+									   kJsonFormat,
+									   kAppId,
 									   [KivaRequestManager appID]]];
 }
 
 - (NSURLRequest *)loanDetailsRequestUrl {
 	if ([[KivaRequestManager appID] isEqualToString:@""]) {
-		return [self urlRequestFromString:[apiUrlString stringByAppendingFormat:@"%@.%@",
+		return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@.%@",
 										   [self listObjects],
-										   jsonFormat]];
+										   kJsonFormat]];
 	}
 	
-	return [self urlRequestFromString:[apiUrlString stringByAppendingFormat:@"%@.%@?%@=%@",
+	return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@.%@?%@=%@",
 									   [self listObjects],
-									   jsonFormat,
-									   appId,
+									   kJsonFormat,
+									   kAppId,
 									   [KivaRequestManager appID]]];
 }
+
+
 
 #pragma mark - Helper Methods
 
@@ -82,7 +86,7 @@ static const NSString *appId			= @"app_id";
 	NSString *value = @"";
 	NSString *delimeter = @"";
 	
-	if ([self requestType] == kLoanDetails) {
+	if ([self requestType] == LOAN_DETAILS) {
 		for (NSObject *o in objects) {
 			if ([o isKindOfClass:[NSNumber class]]) {
 				value = [value stringByAppendingFormat:@"%@%d", delimeter, [((NSNumber *)o) intValue]];
@@ -108,17 +112,17 @@ static const NSString *appId			= @"app_id";
 #pragma mark - Requests
 
 + (instancetype)newestLoans {
-	return [[KivaLoanRequest alloc] initWithRequestType:kNewestLoansRequest];
+	return [[KivaLoanRequest alloc] initWithRequestType:NEWEST_LOANS];
 }
 
 + (instancetype)loanDetails:(NSNumber *)loanId {
-	return [[[KivaLoanRequest alloc] initWithRequestType:kLoanDetails] addObjects:[NSArray arrayWithObjects:loanId, nil]];
+	return [[[KivaLoanRequest alloc] initWithRequestType:LOAN_DETAILS] addObjects:[NSArray arrayWithObjects:loanId, nil]];
 }
 
 // API supports up to 100 loans
 + (instancetype)multipleLoanDetails:(NSArray *)loanIds {
 	NSAssert(loanIds.count < 100, @"API only supports up max 100 loan items");
-	return [[[KivaLoanRequest alloc] initWithRequestType:kLoanDetails] addObjects:loanIds];
+	return [[[KivaLoanRequest alloc] initWithRequestType:LOAN_DETAILS] addObjects:loanIds];
 }
 
 @end

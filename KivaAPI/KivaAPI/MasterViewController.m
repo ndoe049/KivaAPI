@@ -51,6 +51,11 @@
 //	[KivaRequestManager sendPartnerRequest:request withCompletionHandler:^(BOOL success, NSArray *partners, NSError *error){
 //		
 //	}];
+
+//	KivaLenderRequest *request = [KivaLenderRequest lendersForLoan:[NSNumber numberWithInt:792588]];
+//	[KivaRequestManager sendLenderRequest:request withCompletionHandler:^(BOOL success, NSArray *partners, NSError *error){
+//	
+//	}];
 	
 }
 

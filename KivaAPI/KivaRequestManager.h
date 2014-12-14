@@ -10,11 +10,13 @@
 #import <UIKit/UIImage.h>
 #import "KivaLoanRequest.h"
 #import "KivaPartnerRequest.h"
+#import "KivaLenderRequest.h"
 #import "KivaImage.h"
 
 typedef void (^loanRequestCompletionHandler)(BOOL success, NSArray *loans, NSError *error);
 typedef void (^imageRequestCompletionHandler)(BOOL success, UIImage *image, NSError *error);
 typedef void (^partnerRequestCompletionHandler)(BOOL success, NSArray *partners, NSError *error);
+typedef void (^lendersRequestCompletionHandler)(BOOL success, NSArray *lenders, NSError *error);
 
 @interface KivaRequestManager : NSObject
 
@@ -28,6 +30,9 @@ typedef void (^partnerRequestCompletionHandler)(BOOL success, NSArray *partners,
 
 + (void)sendPartnerRequest:(KivaPartnerRequest *)request
 	 withCompletionHandler:(partnerRequestCompletionHandler)completionHandler;
+
++ (void)sendLenderRequest:(KivaLenderRequest *)request
+	withCompletionHandler:(lendersRequestCompletionHandler)completionHandler;
 
 + (void)addAppId:(NSString *)appId;
 + (NSString *)appID;

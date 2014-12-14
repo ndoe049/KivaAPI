@@ -30,6 +30,8 @@
 		6CC3ED7D1A3CE6A200F49BE2 /* KivaPartnerRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC3ED7C1A3CE6A200F49BE2 /* KivaPartnerRequest.m */; };
 		6CC3ED801A3CE9C800F49BE2 /* KivaPartner.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC3ED7F1A3CE9C800F49BE2 /* KivaPartner.m */; };
 		6CC3ED831A3E4CCE00F49BE2 /* KivaPartnerCountry.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC3ED821A3E4CCE00F49BE2 /* KivaPartnerCountry.m */; };
+		6CC3ED861A3E558900F49BE2 /* KivaLender.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC3ED851A3E558900F49BE2 /* KivaLender.m */; };
+		6CC3ED8A1A3E57AC00F49BE2 /* KivaLenderRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC3ED891A3E57AC00F49BE2 /* KivaLenderRequest.m */; };
 		7B6BA9BEC15A992266111DB4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A16F67132B4942D0AF51772 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -93,6 +95,10 @@
 		6CC3ED7F1A3CE9C800F49BE2 /* KivaPartner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KivaPartner.m; sourceTree = "<group>"; };
 		6CC3ED811A3E4CCE00F49BE2 /* KivaPartnerCountry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KivaPartnerCountry.h; sourceTree = "<group>"; };
 		6CC3ED821A3E4CCE00F49BE2 /* KivaPartnerCountry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KivaPartnerCountry.m; sourceTree = "<group>"; };
+		6CC3ED841A3E558900F49BE2 /* KivaLender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KivaLender.h; sourceTree = "<group>"; };
+		6CC3ED851A3E558900F49BE2 /* KivaLender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KivaLender.m; sourceTree = "<group>"; };
+		6CC3ED881A3E57AC00F49BE2 /* KivaLenderRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KivaLenderRequest.h; sourceTree = "<group>"; };
+		6CC3ED891A3E57AC00F49BE2 /* KivaLenderRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KivaLenderRequest.m; sourceTree = "<group>"; };
 		873BD814C56A3779AF4B979B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -220,8 +226,9 @@
 		6C69134D1A3503270012D6B1 /* Request */ = {
 			isa = PBXGroup;
 			children = (
-				6CC3ED7A1A3CE69100F49BE2 /* Partner */,
+				6CC3ED871A3E579A00F49BE2 /* Lender */,
 				6C6913531A3503600012D6B1 /* Loan */,
+				6CC3ED7A1A3CE69100F49BE2 /* Partner */,
 			);
 			name = Request;
 			sourceTree = "<group>";
@@ -261,6 +268,8 @@
 				6CC3ED7F1A3CE9C800F49BE2 /* KivaPartner.m */,
 				6CC3ED811A3E4CCE00F49BE2 /* KivaPartnerCountry.h */,
 				6CC3ED821A3E4CCE00F49BE2 /* KivaPartnerCountry.m */,
+				6CC3ED841A3E558900F49BE2 /* KivaLender.h */,
+				6CC3ED851A3E558900F49BE2 /* KivaLender.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -281,6 +290,15 @@
 				6CC3ED7C1A3CE6A200F49BE2 /* KivaPartnerRequest.m */,
 			);
 			name = Partner;
+			sourceTree = "<group>";
+		};
+		6CC3ED871A3E579A00F49BE2 /* Lender */ = {
+			isa = PBXGroup;
+			children = (
+				6CC3ED881A3E57AC00F49BE2 /* KivaLenderRequest.h */,
+				6CC3ED891A3E57AC00F49BE2 /* KivaLenderRequest.m */,
+			);
+			name = Lender;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -418,11 +436,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6CC3ED861A3E558900F49BE2 /* KivaLender.m in Sources */,
 				6C6C127C1A3B619A00A1F849 /* KivaPayment.m in Sources */,
 				6C6913561A35036D0012D6B1 /* KivaLoanRequest.m in Sources */,
 				6C6913521A3503580012D6B1 /* KivaAuthManager.m in Sources */,
 				6C6913661A35D34E0012D6B1 /* KivaImage.m in Sources */,
 				6C69135E1A35037A0012D6B1 /* KivaLoan.m in Sources */,
+				6CC3ED8A1A3E57AC00F49BE2 /* KivaLenderRequest.m in Sources */,
 				6C6913281A3503050012D6B1 /* AppDelegate.m in Sources */,
 				6CC3ED761A3CDF5D00F49BE2 /* KivaLossLiability.m in Sources */,
 				6C69132B1A3503050012D6B1 /* MasterViewController.m in Sources */,

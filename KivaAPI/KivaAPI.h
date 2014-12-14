@@ -20,3 +20,5 @@
 #import "KivaScheduledPayment.h"
 #import "KivaPartnerRequest.h"
 #import "KivaPartnerCountry.h"
+#import "KivaLender.h"
+#import "KivaLenderRequest.h"

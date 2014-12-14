@@ -9,9 +9,11 @@
 #import "KivaRequestManager.h"
 #import "KivaLoan.h"
 #import "KivaPartner.h"
+#import "KivaLender.h"
 
 static const NSString *kLoans		= @"loans";
 static const NSString *kPartners	= @"partners";
+static const NSString *kLenders		= @"lenders";
 
 static NSString *applcationId	= @"";
 
@@ -40,7 +42,8 @@ static NSString *applcationId	= @"";
 									   NSMutableArray *values = [[NSMutableArray alloc] init];
 									   
 									   for (NSDictionary *d in loanDictionaries) {
-										   [values addObject:[[KivaLoan	alloc] initWithDictionary:d detailed:[request requestType] == kLoanDetails]];
+										   [values addObject:[[KivaLoan	alloc] initWithDictionary:d
+																						 detailed:[request requestType] == LOAN_DETAILS]];
 									   }
 									   
 									   completionHandler(YES, [NSArray arrayWithArray:values], nil);
@@ -98,7 +101,40 @@ static NSString *applcationId	= @"";
 								   } else {
 									   completionHandler(NO, nil, jsonError);
 								   }
+							   }
+	}];
+}
 
+#pragma mark - Lender Requests
+
++ (void)sendLenderRequest:(KivaLenderRequest *)request withCompletionHandler:(lendersRequestCompletionHandler)completionHandler {
+	[NSURLConnection sendAsynchronousRequest:[request urlRequest] queue:[NSOperationQueue mainQueue]
+						   completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+							   if (connectionError) {
+								   completionHandler(NO, nil, connectionError);
+							   } else if (!response) {
+								   completionHandler(NO, nil, nil);
+							   } else {
+								   NSError *jsonError = nil;
+								   NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:data
+																								  options:NSJSONReadingAllowFragments
+																									error:&jsonError];
+								   if ([jsonDictionary isKindOfClass:[NSDictionary class]]) {
+									   jsonError = [self errorsForJSON:jsonDictionary];
+								   }
+								   
+								   if (!jsonError) {
+									   NSArray *loanDictionaries = [jsonDictionary objectForKey:kLenders];
+									   NSMutableArray *values = [[NSMutableArray alloc] init];
+									   
+									   for (NSDictionary *d in loanDictionaries) {
+										   [values addObject:[[KivaLender alloc] initWithDictionary:d]];
+									   }
+									   
+									   completionHandler(YES, [NSArray arrayWithArray:values], nil);
+								   } else {
+									   completionHandler(NO, nil, jsonError);
+								   }
 							   }
 	}];
 }
