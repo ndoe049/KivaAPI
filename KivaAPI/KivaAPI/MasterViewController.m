@@ -47,6 +47,11 @@
 //	
 //	}];
 	
+//	KivaPartnerRequest *request = [KivaPartnerRequest listPartners];
+//	[KivaRequestManager sendPartnerRequest:request withCompletionHandler:^(BOOL success, NSArray *partners, NSError *error){
+//		
+//	}];
+	
 }
 
 - (void)didReceiveMemoryWarning {

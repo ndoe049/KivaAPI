@@ -8,6 +8,7 @@
 
 #import "KivaRequestManager.h"
 #import "KivaLoan.h"
+#import "KivaPartner.h"
 
 static const NSString *kLoans		= @"loans";
 static const NSString *kPartners	= @"partners";
@@ -90,7 +91,7 @@ static NSString *applcationId	= @"";
 									   NSMutableArray *values = [[NSMutableArray alloc] init];
 									   
 									   for (NSDictionary *d in loanDictionaries) {
-										   //TODO add partners
+										   [values addObject:[[KivaPartner alloc] initWithDictionary:d]];
 									   }
 									   
 									   completionHandler(YES, [NSArray arrayWithArray:values], nil);

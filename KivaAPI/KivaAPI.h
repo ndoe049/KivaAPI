@@ -19,3 +19,4 @@
 #import "KivaLossLiability.h"
 #import "KivaScheduledPayment.h"
 #import "KivaPartnerRequest.h"
+#import "KivaPartnerCountry.h"
