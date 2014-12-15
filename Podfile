@@ -1,3 +1,6 @@
 platform :ios, '8.0'
 
-pod 'AFNetworking'
+pod 'MBProgressHUD'
+pod 'SDWebImage'
+
+xcodeproj '/iPhoneProjects/Projects/KivaAPI/KivaAPI/KivaAPI.xcodeproj'
