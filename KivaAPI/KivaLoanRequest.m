@@ -13,7 +13,7 @@ static const NSString *kApiUrlString	= @"http://api.kivaws.org/v1/loans/";
 static const NSString *kNewestApiPath	= @"newest";
 static const NSString *kJsonFormat		= @"json";
 static const NSString *kAppId			= @"app_id";
-static const NSString *kLenders			= @"lenders";
+static const NSString *kSimilar			= @"similar";
 
 @implementation KivaLoanRequest
 
@@ -36,6 +36,9 @@ static const NSString *kLenders			= @"lenders";
 			break;
 		case LOAN_DETAILS:
 			request = [self loanDetailsRequestUrl];
+			break;
+		case SIMILAR:
+			request = [self similarLoansRequestUrl];
 			break;
 		default:
 			break;
@@ -74,7 +77,12 @@ static const NSString *kLenders			= @"lenders";
 									   [KivaRequestManager appID]]];
 }
 
-
+- (NSURLRequest *)similarLoansRequestUrl {
+	return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@/%@.%@",
+									   [self listObjects],
+									   kSimilar,
+									   kJsonFormat]];
+}
 
 #pragma mark - Helper Methods
 
@@ -91,6 +99,12 @@ static const NSString *kLenders			= @"lenders";
 			}
 			
 			delimeter = @",";
+		}
+	} else if ([self requestType] == SIMILAR) {
+		for (NSObject *o in objects) {
+			if ([o isKindOfClass:[NSNumber class]]) {
+				value = [value stringByAppendingFormat:@"%d",[((NSNumber *)o) intValue]];
+			}
 		}
 	}
 	
@@ -119,6 +133,10 @@ static const NSString *kLenders			= @"lenders";
 + (instancetype)multipleLoanDetails:(NSArray *)loanIds {
 	NSAssert(loanIds.count < 100, @"API only supports up max 100 loan items");
 	return [[KivaLoanRequest alloc] initWithRequestType:LOAN_DETAILS objects:loanIds];
+}
+
++ (instancetype)similarLoans:(NSNumber *)loanId {
+	return [[KivaLoanRequest alloc] initWithRequestType:SIMILAR objects:[NSArray arrayWithObjects:loanId, nil]];
 }
 
 @end
