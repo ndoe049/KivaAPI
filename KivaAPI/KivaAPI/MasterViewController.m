@@ -27,20 +27,20 @@
 	
 	_objects = [[NSMutableArray alloc] init];
 	
-	KivaLoanRequest *request = [KivaLoanRequest newestLoans];
-	[KivaRequestManager sendLoanRequest:request withCompletionHandler:^(BOOL success, NSArray *loans, NSError *error) {
-		if (success) {
-			[_objects removeAllObjects];
-			for (KivaLoan *loan in loans) {
-				[_objects addObject:loan];
-				NSLog(@"%@", loan);
-			}
-			
-			[self.tableView reloadData];
-		} else {
-			NSLog(@"%@", error);
-		}
-	}];
+//	KivaLoanRequest *request = [KivaLoanRequest newestLoans];
+//	[KivaRequestManager sendLoanRequest:request withCompletionHandler:^(BOOL success, NSArray *loans, NSError *error) {
+//		if (success) {
+//			[_objects removeAllObjects];
+//			for (KivaLoan *loan in loans) {
+//				[_objects addObject:loan];
+//				NSLog(@"%@", loan);
+//			}
+//			
+//			[self.tableView reloadData];
+//		} else {
+//			NSLog(@"%@", error);
+//		}
+//	}];
 	
 //	KivaLoanRequest *request = [KivaLoanRequest loanDetails:[NSNumber numberWithInt:2930]];
 //	[KivaRequestManager sendLoanRequest:request withCompletionHandler:^(BOOL success, NSArray *loans, NSError *error) {
@@ -66,6 +66,16 @@
 //	[KivaRequestManager sendLoanRequest:request withCompletionHandler:^(BOOL success, NSArray *loans, NSError *error) {
 //	
 //	}];
+	
+	KivaLoanSearchCriteria *criteria = [[KivaLoanSearchCriteria alloc] init];
+	[criteria status:kFundraising];
+	[criteria gender:MALE];
+	[criteria regions:[NSArray arrayWithObjects:kNorthAmerica, kCentralAmerica, nil]];
+	[criteria theme:kHigherEducation];
+	KivaLoanRequest *request = [KivaLoanRequest search:criteria];
+	[KivaRequestManager sendLoanRequest:request withCompletionHandler:^(BOOL success, NSArray *loans, NSError *error) {
+	
+	}];
 	
 }
 

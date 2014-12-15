@@ -32,6 +32,7 @@
 		6CC3ED831A3E4CCE00F49BE2 /* KivaPartnerCountry.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC3ED821A3E4CCE00F49BE2 /* KivaPartnerCountry.m */; };
 		6CC3ED861A3E558900F49BE2 /* KivaLender.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC3ED851A3E558900F49BE2 /* KivaLender.m */; };
 		6CC3ED8A1A3E57AC00F49BE2 /* KivaLenderRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC3ED891A3E57AC00F49BE2 /* KivaLenderRequest.m */; };
+		6CD764F01A3F4FD4005D176F /* KivaLoanSearchCriteria.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD764EF1A3F4FD4005D176F /* KivaLoanSearchCriteria.m */; };
 		7B6BA9BEC15A992266111DB4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A16F67132B4942D0AF51772 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +49,7 @@
 /* Begin PBXFileReference section */
 		0A16F67132B4942D0AF51772 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D33D4562729CBCDF6A62235 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		6C35165E1A3F7A810044C51F /* KivaLoanSearchConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KivaLoanSearchConstants.h; sourceTree = "<group>"; };
 		6C69131F1A3503050012D6B1 /* KivaAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KivaAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C6913231A3503050012D6B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6C6913241A3503050012D6B1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -99,6 +101,8 @@
 		6CC3ED851A3E558900F49BE2 /* KivaLender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KivaLender.m; sourceTree = "<group>"; };
 		6CC3ED881A3E57AC00F49BE2 /* KivaLenderRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KivaLenderRequest.h; sourceTree = "<group>"; };
 		6CC3ED891A3E57AC00F49BE2 /* KivaLenderRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KivaLenderRequest.m; sourceTree = "<group>"; };
+		6CD764EE1A3F4FD4005D176F /* KivaLoanSearchCriteria.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KivaLoanSearchCriteria.h; sourceTree = "<group>"; };
+		6CD764EF1A3F4FD4005D176F /* KivaLoanSearchCriteria.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KivaLoanSearchCriteria.m; sourceTree = "<group>"; };
 		873BD814C56A3779AF4B979B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -277,8 +281,11 @@
 		6C6913531A3503600012D6B1 /* Loan */ = {
 			isa = PBXGroup;
 			children = (
+				6C35165E1A3F7A810044C51F /* KivaLoanSearchConstants.h */,
 				6C6913541A35036D0012D6B1 /* KivaLoanRequest.h */,
 				6C6913551A35036D0012D6B1 /* KivaLoanRequest.m */,
+				6CD764EE1A3F4FD4005D176F /* KivaLoanSearchCriteria.h */,
+				6CD764EF1A3F4FD4005D176F /* KivaLoanSearchCriteria.m */,
 			);
 			name = Loan;
 			sourceTree = "<group>";
@@ -451,6 +458,7 @@
 				6C6913591A3503740012D6B1 /* KivaRequestManager.m in Sources */,
 				6CC3ED791A3CE41E00F49BE2 /* KivaScheduledPayment.m in Sources */,
 				6CC3ED7D1A3CE6A200F49BE2 /* KivaPartnerRequest.m in Sources */,
+				6CD764F01A3F4FD4005D176F /* KivaLoanSearchCriteria.m in Sources */,
 				6C6913691A35E2120012D6B1 /* KivaVideo.m in Sources */,
 				6C6C127F1A3B6B5000A1F849 /* KivaLocalPayment.m in Sources */,
 				6CC3ED801A3CE9C800F49BE2 /* KivaPartner.m in Sources */,

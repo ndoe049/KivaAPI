@@ -14,6 +14,7 @@ static const NSString *kNewestApiPath	= @"newest";
 static const NSString *kJsonFormat		= @"json";
 static const NSString *kAppId			= @"app_id";
 static const NSString *kSimilar			= @"similar";
+static const NSString *kSearch			= @"search";
 
 @implementation KivaLoanRequest
 
@@ -39,6 +40,9 @@ static const NSString *kSimilar			= @"similar";
 			break;
 		case SIMILAR:
 			request = [self similarLoansRequestUrl];
+			break;
+		case SEARCH_CRITERIA:
+			request = [self serachRequestUrl];
 			break;
 		default:
 			break;
@@ -84,12 +88,19 @@ static const NSString *kSimilar			= @"similar";
 									   kJsonFormat]];
 }
 
+- (NSURLRequest *)serachRequestUrl {
+	return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@.%@?%@",
+									   kSearch,
+									   kJsonFormat,
+									   [self listObjects]]];
+}
+
 #pragma mark - Helper Methods
 
 - (NSString *)listObjects {
 	NSString *value = @"";
 	NSString *delimeter = @"";
-	
+
 	if ([self requestType] == LOAN_DETAILS) {
 		for (NSObject *o in objects) {
 			if ([o isKindOfClass:[NSNumber class]]) {
@@ -104,6 +115,13 @@ static const NSString *kSimilar			= @"similar";
 		for (NSObject *o in objects) {
 			if ([o isKindOfClass:[NSNumber class]]) {
 				value = [value stringByAppendingFormat:@"%d",[((NSNumber *)o) intValue]];
+			}
+		}
+	} else if ([self requestType] == SEARCH_CRITERIA) {
+		for (NSObject *o in objects) {
+			if ([o isKindOfClass:[KivaLoanSearchCriteria class]]) {
+				value = [(KivaLoanSearchCriteria *)o build];
+				break;
 			}
 		}
 	}
@@ -137,6 +155,10 @@ static const NSString *kSimilar			= @"similar";
 
 + (instancetype)similarLoans:(NSNumber *)loanId {
 	return [[KivaLoanRequest alloc] initWithRequestType:SIMILAR objects:[NSArray arrayWithObjects:loanId, nil]];
+}
+
++ (instancetype)search:(KivaLoanSearchCriteria *)criteria {
+	return [[KivaLoanRequest alloc] initWithRequestType:SEARCH_CRITERIA objects:[NSArray arrayWithObjects:criteria, nil]];
 }
 
 @end
