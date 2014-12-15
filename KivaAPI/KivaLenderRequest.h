@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, LenderRequestType) {
-	LOAN_LENDERS
+	LOAN_LENDERS,
+	LENDER_DETAILS
 };
 
 @interface KivaLenderRequest : NSObject {

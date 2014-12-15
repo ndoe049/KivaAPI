@@ -42,6 +42,11 @@
 		}
 	}];
 	
+//	KivaLoanRequest *request = [KivaLoanRequest loanDetails:[NSNumber numberWithInt:2930]];
+//	[KivaRequestManager sendLoanRequest:request withCompletionHandler:^(BOOL success, NSArray *loans, NSError *error) {
+//	
+//	}];
+	
 //	KivaLoanRequest *request = [KivaLoanRequest multipleLoanDetails:[NSArray arrayWithObjects:@"2930", @"2931", nil]];
 //	[KivaRequestManager sendLoanRequest:request withCompletionHandler:^(BOOL success, NSArray *loans, NSError *error) {
 //	

@@ -19,16 +19,12 @@ static const NSString *kLenders			= @"lenders";
 
 #pragma mark - Public methods 
 
-- (id)initWithRequestType:(LoanRequestType)requestType {
+- (id)initWithRequestType:(LoanRequestType)requestType objects:(NSArray *)valueObjects {
 	if (self = [super init]) {
 		_requestType = requestType;
+		objects = [NSMutableArray arrayWithArray:valueObjects];
 	}
 	
-	return self;
-}
-
-- (id)addObjects:(NSArray *)valueObjects {
-	objects = [[NSMutableArray alloc] initWithArray:valueObjects];
 	return self;
 }
 
@@ -112,17 +108,17 @@ static const NSString *kLenders			= @"lenders";
 #pragma mark - Requests
 
 + (instancetype)newestLoans {
-	return [[KivaLoanRequest alloc] initWithRequestType:NEWEST_LOANS];
+	return [[KivaLoanRequest alloc] initWithRequestType:NEWEST_LOANS objects:nil];
 }
 
 + (instancetype)loanDetails:(NSNumber *)loanId {
-	return [[[KivaLoanRequest alloc] initWithRequestType:LOAN_DETAILS] addObjects:[NSArray arrayWithObjects:loanId, nil]];
+	return [[KivaLoanRequest alloc] initWithRequestType:LOAN_DETAILS objects:[NSArray arrayWithObjects:loanId, nil]];
 }
 
 // API supports up to 100 loans
 + (instancetype)multipleLoanDetails:(NSArray *)loanIds {
 	NSAssert(loanIds.count < 100, @"API only supports up max 100 loan items");
-	return [[[KivaLoanRequest alloc] initWithRequestType:LOAN_DETAILS] addObjects:loanIds];
+	return [[KivaLoanRequest alloc] initWithRequestType:LOAN_DETAILS objects:loanIds];
 }
 
 @end
