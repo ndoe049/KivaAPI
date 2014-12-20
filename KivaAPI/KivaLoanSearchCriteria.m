@@ -139,26 +139,44 @@ static const NSString *kFalse					= @"false";
 }
 
 - (void)partnerMinRiskRating:(NSNumber *)minRiskRating {
+	if ([minRiskRating intValue] >= 5 || [minRiskRating intValue] <= 0) {
+		NSLog(@"Min risk rating must be between 0 - 5");
+	}
 	[self addNumericValue:minRiskRating withKey:kPartnerRiskMinKey];
 }
 
 - (void)partnerMaxRiskRating:(NSNumber *)maxRiskRating {
+	if ([maxRiskRating intValue] >= 5 || [maxRiskRating intValue] <= 0) {
+		NSLog(@"Max risk rating must be between 0 - 5");
+	}
 	[self addNumericValue:maxRiskRating withKey:kPartnerRiskMaxKey];
 }
 
 - (void)partnerMinArrears:(NSNumber *)minArrears {
+	if ([minArrears intValue] >= 41 || [minArrears intValue] <= 0) {
+		NSLog(@"Min partner arrears must be between 0 - 41");
+	}
 	[self addNumericValue:minArrears withKey:kPartnerArrearsMinKey];
 }
 
 - (void)partnerMaxArrears:(NSNumber *)maxArrears {
+	if ([maxArrears intValue] >= 41 || [maxArrears intValue] <= 0) {
+		NSLog(@"Max partner arrears must be between 0 - 41");
+	}
 	[self addNumericValue:maxArrears withKey:kPartnerArrearsMaxKey];
 }
 
 - (void)partnerMinDefault:(NSNumber *)minDefault {
+	if ([minDefault intValue] >= 26 || [minDefault intValue] <= 0) {
+		NSLog(@"Min partner default must be between 0 - 26");
+	}
 	[self addNumericValue:minDefault withKey:kPartnerDefaultMinKey];
 }
 
 - (void)partnerMaxDefault:(NSNumber *)maxDefault {
+	if ([maxDefault intValue] >= 26 || [maxDefault intValue] <= 0) {
+		NSLog(@"Max partner default must be between 0 - 26");
+	}
 	[self addNumericValue:maxDefault withKey:kPartnerDefaultMaxKey];
 }
 
@@ -228,6 +246,35 @@ static const NSString *kFalse					= @"false";
 	NSLog(@"Built Search : %@", urlValue);
 	
 	return urlValue;
+}
+
+#pragma mark - Helper
+
+- (BOOL)isOnlyIds {
+	for (NSDictionary *d in _values) {
+		NSString *key = [d objectForKey:@"key"];
+		if ([kIdsOnlyKey isEqualToString:key]) {
+			NSString *value = [d objectForKey:@"value"];
+			return [kTrue isEqualToString:value];
+		}
+	}
+	
+	return NO;
+}
+
+#pragma mark - 
+
+- (NSString *)description {
+	NSString *output = @"";
+	NSString *delimeter = @"";
+	for (NSDictionary *d in _values) {
+		NSString *key = [d objectForKey:@"key"];
+		NSString *value = [d objectForKey:@"value"];
+		output = [output stringByAppendingFormat:@"%@%@=%@", delimeter, key, value];
+		delimeter = @", ";
+	}
+	
+	return [NSString stringWithFormat:@"KivaLoanSearchCriteria[%@]", output];
 }
 
 @end

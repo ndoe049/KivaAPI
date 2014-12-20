@@ -47,4 +47,6 @@
 
 - (NSString *)build;
 
+- (BOOL)isOnlyIds;
+
 @end

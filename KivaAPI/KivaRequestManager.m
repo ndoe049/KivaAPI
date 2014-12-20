@@ -41,10 +41,17 @@ static NSString *applcationId	= @"";
 									   NSArray *loanDictionaries = [jsonDictionary objectForKey:kLoans];
 									   NSMutableArray *values = [[NSMutableArray alloc] init];
 									   
-									   for (NSDictionary *d in loanDictionaries) {
-										   [values addObject:[[KivaLoan	alloc] initWithDictionary:d
-																						 detailed:[request requestType] == LOAN_DETAILS]];
+									   if ([[request criteria] isOnlyIds]) {
+										   for (NSNumber *n in loanDictionaries) {
+											   [values addObject:[[KivaLoan alloc] initWithDictionary:[NSDictionary dictionaryWithObjectsAndKeys:n, @"id", nil]]];
+										   }
+									   } else {
+										   for (NSDictionary *d in loanDictionaries) {
+											   [values addObject:[[KivaLoan	alloc] initWithDictionary:d
+																							 detailed:[request requestType] == LOAN_DETAILS]];
+										   }
 									   }
+									   
 									   
 									   completionHandler(YES, [NSArray arrayWithArray:values], nil);
 								   } else {

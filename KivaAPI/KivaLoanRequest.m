@@ -29,6 +29,16 @@ static const NSString *kSearch			= @"search";
 	return self;
 }
 
+- (id)initWithRequestType:(LoanRequestType)requestType criteria:(KivaLoanSearchCriteria *)criteria {
+	if (self = [super init]) {
+		_requestType = requestType;
+		_criteria = criteria;
+		objects = [[NSMutableArray alloc] init];
+	}
+	
+	return self;
+}
+
 - (NSURLRequest *)urlRequest {
 	NSURLRequest *request = nil;
 	switch ([self requestType]) {
@@ -89,10 +99,16 @@ static const NSString *kSearch			= @"search";
 }
 
 - (NSURLRequest *)serachRequestUrl {
-	return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@.%@?%@",
+	if (_criteria) {
+		return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@.%@?%@",
+										   kSearch,
+										   kJsonFormat,
+										   [_criteria build]]];
+	}
+	
+	return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@.%@",
 									   kSearch,
-									   kJsonFormat,
-									   [self listObjects]]];
+									   kJsonFormat]];
 }
 
 #pragma mark - Helper Methods
@@ -115,13 +131,6 @@ static const NSString *kSearch			= @"search";
 		for (NSObject *o in objects) {
 			if ([o isKindOfClass:[NSNumber class]]) {
 				value = [value stringByAppendingFormat:@"%d",[((NSNumber *)o) intValue]];
-			}
-		}
-	} else if ([self requestType] == SEARCH_CRITERIA) {
-		for (NSObject *o in objects) {
-			if ([o isKindOfClass:[KivaLoanSearchCriteria class]]) {
-				value = [(KivaLoanSearchCriteria *)o build];
-				break;
 			}
 		}
 	}
@@ -149,7 +158,9 @@ static const NSString *kSearch			= @"search";
 
 // API supports up to 100 loans
 + (instancetype)multipleLoanDetails:(NSArray *)loanIds {
-	NSAssert(loanIds.count < 100, @"API only supports up max 100 loan items");
+	if (loanIds && [loanIds count] > 100) {
+		NSLog(@"API only supports up max 100 loan items");
+	}
 	return [[KivaLoanRequest alloc] initWithRequestType:LOAN_DETAILS objects:loanIds];
 }
 
@@ -158,7 +169,7 @@ static const NSString *kSearch			= @"search";
 }
 
 + (instancetype)search:(KivaLoanSearchCriteria *)criteria {
-	return [[KivaLoanRequest alloc] initWithRequestType:SEARCH_CRITERIA objects:[NSArray arrayWithObjects:criteria, nil]];
+	return [[KivaLoanRequest alloc] initWithRequestType:SEARCH_CRITERIA criteria:criteria];
 }
 
 @end

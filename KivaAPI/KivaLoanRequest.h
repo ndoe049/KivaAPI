@@ -21,6 +21,7 @@ typedef NS_ENUM(NSInteger, LoanRequestType) {
 }
 
 @property (nonatomic, readonly) LoanRequestType requestType;
+@property (nonatomic, readonly) KivaLoanSearchCriteria *criteria;
 
 + (instancetype)newestLoans;
 + (instancetype)loanDetails:(NSNumber *)loanId;

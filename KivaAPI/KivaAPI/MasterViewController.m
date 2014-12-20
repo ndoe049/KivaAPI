@@ -33,7 +33,6 @@
 //			[_objects removeAllObjects];
 //			for (KivaLoan *loan in loans) {
 //				[_objects addObject:loan];
-//				NSLog(@"%@", loan);
 //			}
 //			
 //			[self.tableView reloadData];
@@ -44,38 +43,81 @@
 	
 //	KivaLoanRequest *request = [KivaLoanRequest loanDetails:[NSNumber numberWithInt:2930]];
 //	[KivaRequestManager sendLoanRequest:request withCompletionHandler:^(BOOL success, NSArray *loans, NSError *error) {
-//	
+//		if (success) {
+//			[_objects removeAllObjects];
+//			for (KivaLoan *loan in loans) {
+//				[_objects addObject:loan];
+//			}
+//			
+//			[self.tableView reloadData];
+//		} else {
+//			NSLog(@"%@", error);
+//		}
 //	}];
 	
 //	KivaLoanRequest *request = [KivaLoanRequest multipleLoanDetails:[NSArray arrayWithObjects:@"2930", @"2931", nil]];
 //	[KivaRequestManager sendLoanRequest:request withCompletionHandler:^(BOOL success, NSArray *loans, NSError *error) {
-//	
-//	}];
-	
-//	KivaPartnerRequest *request = [KivaPartnerRequest listPartners];
-//	[KivaRequestManager sendPartnerRequest:request withCompletionHandler:^(BOOL success, NSArray *partners, NSError *error){
-//		
-//	}];
-
-//	KivaLenderRequest *request = [KivaLenderRequest lendersForLoan:[NSNumber numberWithInt:792588]];
-//	[KivaRequestManager sendLenderRequest:request withCompletionHandler:^(BOOL success, NSArray *partners, NSError *error){
-//	
+//		if (success) {
+//			[_objects removeAllObjects];
+//			for (KivaLoan *loan in loans) {
+//				[_objects addObject:loan];
+//			}
+//			
+//			[self.tableView reloadData];
+//		} else {
+//			NSLog(@"%@", error);
+//		}
+//
 //	}];
 	
 //	KivaLoanRequest *request = [KivaLoanRequest similarLoans:[NSNumber numberWithInt:2930]];
 //	[KivaRequestManager sendLoanRequest:request withCompletionHandler:^(BOOL success, NSArray *loans, NSError *error) {
-//	
+//		if (success) {
+//			[_objects removeAllObjects];
+//			for (KivaLoan *loan in loans) {
+//				[_objects addObject:loan];
+//			}
+//			
+//			[self.tableView reloadData];
+//		} else {
+//			NSLog(@"%@", error);
+//		}
 //	}];
 	
 	KivaLoanSearchCriteria *criteria = [[KivaLoanSearchCriteria alloc] init];
-	[criteria status:kFundraising];
-	[criteria gender:MALE];
-	[criteria regions:[NSArray arrayWithObjects:kNorthAmerica, kCentralAmerica, nil]];
-	[criteria theme:kHigherEducation];
+	[criteria country:kUganda];
+	[criteria gender:FEMALE];
 	KivaLoanRequest *request = [KivaLoanRequest search:criteria];
 	[KivaRequestManager sendLoanRequest:request withCompletionHandler:^(BOOL success, NSArray *loans, NSError *error) {
-	
+		if (success) {
+			[_objects removeAllObjects];
+			for (KivaLoan *loan in loans) {
+				[_objects addObject:loan];
+			}
+			
+			[self.tableView reloadData];
+		} else {
+			NSLog(@"%@", error);
+		}
 	}];
+
+//	KivaPartnerRequest *request = [KivaPartnerRequest listPartners];
+//	[KivaRequestManager sendPartnerRequest:request withCompletionHandler:^(BOOL success, NSArray *partners, NSError *error){
+//		if (success) {
+//
+//		} else {
+//			NSLog(@"%@", error);
+//		}
+//	}];
+
+//	KivaLenderRequest *request = [KivaLenderRequest lendersForLoan:[NSNumber numberWithInt:792588]];
+//	[KivaRequestManager sendLenderRequest:request withCompletionHandler:^(BOOL success, NSArray *partners, NSError *error){
+//		if (success) {
+//			
+//		} else {
+//			NSLog(@"%@", error);
+//		}
+//	}];
 	
 }
 
