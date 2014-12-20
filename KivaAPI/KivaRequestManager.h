@@ -13,6 +13,8 @@
 #import "KivaLenderRequest.h"
 #import "KivaImage.h"
 
+static const NSString *kAppId	= @"app_id";
+
 typedef void (^loanRequestCompletionHandler)(BOOL success, NSArray *loans, NSError *error);
 typedef void (^imageRequestCompletionHandler)(BOOL success, UIImage *image, NSError *error);
 typedef void (^partnerRequestCompletionHandler)(BOOL success, NSArray *partners, NSError *error);

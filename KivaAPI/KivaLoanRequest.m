@@ -12,7 +12,6 @@
 static const NSString *kApiUrlString	= @"http://api.kivaws.org/v1/loans/";
 static const NSString *kNewestApiPath	= @"newest";
 static const NSString *kJsonFormat		= @"json";
-static const NSString *kAppId			= @"app_id";
 static const NSString *kSimilar			= @"similar";
 static const NSString *kSearch			= @"search";
 
@@ -92,23 +91,51 @@ static const NSString *kSearch			= @"search";
 }
 
 - (NSURLRequest *)similarLoansRequestUrl {
-	return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@/%@.%@",
+	if ([[KivaRequestManager appID] isEqualToString:@""]) {
+		return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@/%@.%@",
+										   [self listObjects],
+										   kSimilar,
+										   kJsonFormat]];
+	}
+	
+	return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@/%@.%@?%@=%@",
 									   [self listObjects],
 									   kSimilar,
-									   kJsonFormat]];
+									   kJsonFormat,
+									   kAppId,
+									   [KivaRequestManager appID]]];
 }
 
 - (NSURLRequest *)serachRequestUrl {
 	if (_criteria) {
-		return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@.%@?%@",
+		if ([[KivaRequestManager appID] isEqualToString:@""]) {
+			return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@.%@?%@",
+											   kSearch,
+											   kJsonFormat,
+											   [_criteria build]]];
+		}
+		
+		return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@.%@?%@&%@=%@",
 										   kSearch,
 										   kJsonFormat,
-										   [_criteria build]]];
+										   [_criteria build],
+										   kAppId,
+										   [KivaRequestManager appID]]];
+	} {
+		NSLog(@"No search criteria!");
 	}
 	
-	return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@.%@",
+	if ([[KivaRequestManager appID] isEqualToString:@""]) {
+		return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@.%@",
+										   kSearch,
+										   kJsonFormat]];
+	}
+	
+	return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@.%@?%@=%@",
 									   kSearch,
-									   kJsonFormat]];
+									   kJsonFormat,
+									   kAppId,
+									   [KivaRequestManager appID]]];
 }
 
 #pragma mark - Helper Methods
