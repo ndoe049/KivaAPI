@@ -10,10 +10,12 @@
 #import "KivaLoan.h"
 #import "KivaPartner.h"
 #import "KivaLender.h"
+#import "KivaTeam.h"
 
 static const NSString *kLoans		= @"loans";
 static const NSString *kPartners	= @"partners";
 static const NSString *kLenders		= @"lenders";
+static const NSString *kTeams		= @"teams";
 
 static NSString *applcationId	= @"";
 
@@ -136,6 +138,40 @@ static NSString *applcationId	= @"";
 									   
 									   for (NSDictionary *d in loanDictionaries) {
 										   [values addObject:[[KivaLender alloc] initWithDictionary:d]];
+									   }
+									   
+									   completionHandler(YES, [NSArray arrayWithArray:values], nil);
+								   } else {
+									   completionHandler(NO, nil, jsonError);
+								   }
+							   }
+	}];
+}
+
+#pragma mark - Team Requests
+
++ (void)sendTeamRequest:(KivaTeamRequest *)request withCompletionHandler:(teamsRequestCompletionHandler)completionHandler {
+	[NSURLConnection sendAsynchronousRequest:[request urlRequest] queue:[NSOperationQueue mainQueue]
+						   completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+							   if (connectionError) {
+								   completionHandler(NO, nil, connectionError);
+							   } else if (!response) {
+								   completionHandler(NO, nil, nil);
+							   } else {
+								   NSError *jsonError = nil;
+								   NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:data
+																								  options:NSJSONReadingAllowFragments
+																									error:&jsonError];
+								   if ([jsonDictionary isKindOfClass:[NSDictionary class]]) {
+									   jsonError = [self errorsForJSON:jsonDictionary];
+								   }
+								   
+								   if (!jsonError) {
+									   NSArray *loanDictionaries = [jsonDictionary objectForKey:kTeams];
+									   NSMutableArray *values = [[NSMutableArray alloc] init];
+									   
+									   for (NSDictionary *d in loanDictionaries) {
+										   [values addObject:[[KivaTeam alloc] initWithDictionary:d]];
 									   }
 									   
 									   completionHandler(YES, [NSArray arrayWithArray:values], nil);

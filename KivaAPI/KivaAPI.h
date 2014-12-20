@@ -24,3 +24,5 @@
 #import "KivaLenderRequest.h"
 #import "KivaLoanSearchCriteria.h"
 #import "KivaLoanSearchConstants.h"
+#import "KivaTeam.h"
+#import "KivaTeamRequest.h"

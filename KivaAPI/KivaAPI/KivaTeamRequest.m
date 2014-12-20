@@ -1,21 +1,20 @@
 //
-//  KivaLenderRequest.m
+//  KivaTeamRequest.m
 //  KivaAPI
 //
-//  Created by Nathan Doe on 12/14/14.
+//  Created by Nathan Doe on 12/20/14.
 //  Copyright (c) 2014 Nathaniel Doe. All rights reserved.
 //
 
-#import "KivaLenderRequest.h"
+#import "KivaTeamRequest.h"
 #import "KivaRequestManager.h"
 
-static const NSString *kApiUrlString	= @"http://api.kivaws.org/v1/loans/";
-static const NSString *kJsonFormat		= @"json";
-static const NSString *kLenders			= @"lenders";
+static const NSString *kApiUrlString		= @"http://api.kivaws.org/v1/loans/";
+static const NSString *kApiPath				= @"/teams.json";
 
-@implementation KivaLenderRequest
+@implementation KivaTeamRequest
 
-- (id)initWithRequestType:(LenderRequestType)requestType objects:(NSArray *)valueObjects {
+- (id)initWithRequestType:(TeamRequestType)requestType objects:(NSArray *)valueObjects {
 	if (self = [super init]) {
 		_requestType = requestType;
 		objects = [NSMutableArray arrayWithArray:valueObjects];
@@ -25,32 +24,21 @@ static const NSString *kLenders			= @"lenders";
 }
 
 - (NSURLRequest *)urlRequest {
-	NSURLRequest *request = nil;
-	switch ([self requestType]) {
-		case LOAN_LENDERS:
-			request = [self loanLendersRequestUrl];
-			break;
-		default:
-			break;
-	}
-	
-	return request;
+	return [self teamsForLoanRequest];
 }
 
 #pragma mark - NSURLRequestConstruction methods
 
-- (NSURLRequest *)loanLendersRequestUrl {
+- (NSURLRequest *)teamsForLoanRequest {
 	if ([[KivaRequestManager appID] isEqualToString:@""]) {
-		return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@/%@.%@",
+		return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@%@",
 										   [self listObjects],
-										   kLenders,
-										   kJsonFormat]];
+										   kApiPath]];
 	}
 	
-	return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@/%@.%@?%@=%@",
+	return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@%@?%@=%@",
 									   [self listObjects],
-									   kLenders,
-									   kJsonFormat,
+									   kApiPath,
 									   kAppId,
 									   [KivaRequestManager appID]]];
 }
@@ -60,7 +48,7 @@ static const NSString *kLenders			= @"lenders";
 - (NSString *)listObjects {
 	NSString *value = @"";
 	
-	if ([self requestType] == LOAN_LENDERS) {
+	if ([self requestType] == LOAN_TEAMS) {
 		for (NSObject *o in objects) {
 			if ([o isKindOfClass:[NSNumber class]]) {
 				value = [value stringByAppendingFormat:@"%d", [((NSNumber *)o) intValue]];
@@ -72,6 +60,7 @@ static const NSString *kLenders			= @"lenders";
 	return value;
 }
 
+
 - (NSURLRequest *)urlRequestFromString:(NSString *)string {
 	string = [string stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 	string = [string stringByReplacingOccurrencesOfString:@"(null)"
@@ -80,12 +69,10 @@ static const NSString *kLenders			= @"lenders";
 	return [NSURLRequest requestWithURL:[NSURL URLWithString:string]];
 }
 
-
-
 #pragma mark - Requests
 
-+ (instancetype)lendersForLoanId:(NSNumber *)loanId {
-	return [[KivaLenderRequest alloc] initWithRequestType:LOAN_LENDERS objects:[NSArray arrayWithObjects:loanId, nil]];
++ (instancetype)teamsForLoanId:(NSNumber *)loanId {
+	return [[KivaTeamRequest alloc] initWithRequestType:LOAN_TEAMS objects:[NSArray arrayWithObjects:loanId, nil]];
 }
 
 @end
