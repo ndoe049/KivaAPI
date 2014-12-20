@@ -7,6 +7,7 @@
 //
 
 #import "KivaLenderRequest.h"
+#import "KivaRequestManager.h"
 
 static const NSString *kApiUrlString	= @"http://api.kivaws.org/v1/loans/";
 static const NSString *kJsonFormat		= @"json";
@@ -39,10 +40,19 @@ static const NSString *kLenders			= @"lenders";
 #pragma mark - NSURLRequestConstruction methods
 
 - (NSURLRequest *)loanLendersRequestUrl {
-	return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@/%@.%@",
+	if ([[KivaRequestManager appID] isEqualToString:@""]) {
+		return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@/%@.%@",
+										   [self listObjects],
+										   kLenders,
+										   kJsonFormat]];
+	}
+	
+	return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@/%@.%@?%@=%@",
 									   [self listObjects],
 									   kLenders,
-									   kJsonFormat]];
+									   kJsonFormat,
+									   kAppId,
+									   [KivaRequestManager appID]]];
 }
 
 #pragma mark - Helper Methods

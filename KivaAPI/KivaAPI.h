@@ -22,3 +22,5 @@
 #import "KivaPartnerCountry.h"
 #import "KivaLender.h"
 #import "KivaLenderRequest.h"
+#import "KivaLoanSearchCriteria.h"
+#import "KivaLoanSearchConstants.h"

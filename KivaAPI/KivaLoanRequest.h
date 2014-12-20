@@ -7,11 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "KivaLoanSearchCriteria.h"
 
 typedef NS_ENUM(NSInteger, LoanRequestType) {
 	NEWEST_LOANS,
 	LOAN_DETAILS,
-	SIMILAR
+	SIMILAR,
+	SEARCH_CRITERIA
 };
 
 @interface KivaLoanRequest : NSObject {
@@ -19,11 +21,13 @@ typedef NS_ENUM(NSInteger, LoanRequestType) {
 }
 
 @property (nonatomic, readonly) LoanRequestType requestType;
+@property (nonatomic, readonly) KivaLoanSearchCriteria *criteria;
 
 + (instancetype)newestLoans;
 + (instancetype)loanDetails:(NSNumber *)loanId;
 + (instancetype)multipleLoanDetails:(NSArray *)loanIds;
 + (instancetype)similarLoans:(NSNumber *)loanId;
++ (instancetype)search:(KivaLoanSearchCriteria *)criteria;
 
 - (NSURLRequest *)urlRequest;
 

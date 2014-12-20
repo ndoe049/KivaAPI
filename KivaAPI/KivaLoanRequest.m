@@ -12,8 +12,8 @@
 static const NSString *kApiUrlString	= @"http://api.kivaws.org/v1/loans/";
 static const NSString *kNewestApiPath	= @"newest";
 static const NSString *kJsonFormat		= @"json";
-static const NSString *kAppId			= @"app_id";
 static const NSString *kSimilar			= @"similar";
+static const NSString *kSearch			= @"search";
 
 @implementation KivaLoanRequest
 
@@ -23,6 +23,16 @@ static const NSString *kSimilar			= @"similar";
 	if (self = [super init]) {
 		_requestType = requestType;
 		objects = [NSMutableArray arrayWithArray:valueObjects];
+	}
+	
+	return self;
+}
+
+- (id)initWithRequestType:(LoanRequestType)requestType criteria:(KivaLoanSearchCriteria *)criteria {
+	if (self = [super init]) {
+		_requestType = requestType;
+		_criteria = criteria;
+		objects = [[NSMutableArray alloc] init];
 	}
 	
 	return self;
@@ -39,6 +49,9 @@ static const NSString *kSimilar			= @"similar";
 			break;
 		case SIMILAR:
 			request = [self similarLoansRequestUrl];
+			break;
+		case SEARCH_CRITERIA:
+			request = [self serachRequestUrl];
 			break;
 		default:
 			break;
@@ -78,10 +91,51 @@ static const NSString *kSimilar			= @"similar";
 }
 
 - (NSURLRequest *)similarLoansRequestUrl {
-	return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@/%@.%@",
+	if ([[KivaRequestManager appID] isEqualToString:@""]) {
+		return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@/%@.%@",
+										   [self listObjects],
+										   kSimilar,
+										   kJsonFormat]];
+	}
+	
+	return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@/%@.%@?%@=%@",
 									   [self listObjects],
 									   kSimilar,
-									   kJsonFormat]];
+									   kJsonFormat,
+									   kAppId,
+									   [KivaRequestManager appID]]];
+}
+
+- (NSURLRequest *)serachRequestUrl {
+	if (_criteria) {
+		if ([[KivaRequestManager appID] isEqualToString:@""]) {
+			return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@.%@?%@",
+											   kSearch,
+											   kJsonFormat,
+											   [_criteria build]]];
+		}
+		
+		return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@.%@?%@&%@=%@",
+										   kSearch,
+										   kJsonFormat,
+										   [_criteria build],
+										   kAppId,
+										   [KivaRequestManager appID]]];
+	} {
+		NSLog(@"No search criteria!");
+	}
+	
+	if ([[KivaRequestManager appID] isEqualToString:@""]) {
+		return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@.%@",
+										   kSearch,
+										   kJsonFormat]];
+	}
+	
+	return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@.%@?%@=%@",
+									   kSearch,
+									   kJsonFormat,
+									   kAppId,
+									   [KivaRequestManager appID]]];
 }
 
 #pragma mark - Helper Methods
@@ -89,7 +143,7 @@ static const NSString *kSimilar			= @"similar";
 - (NSString *)listObjects {
 	NSString *value = @"";
 	NSString *delimeter = @"";
-	
+
 	if ([self requestType] == LOAN_DETAILS) {
 		for (NSObject *o in objects) {
 			if ([o isKindOfClass:[NSNumber class]]) {
@@ -131,12 +185,18 @@ static const NSString *kSimilar			= @"similar";
 
 // API supports up to 100 loans
 + (instancetype)multipleLoanDetails:(NSArray *)loanIds {
-	NSAssert(loanIds.count < 100, @"API only supports up max 100 loan items");
+	if (loanIds && [loanIds count] > 100) {
+		NSLog(@"API only supports up max 100 loan items");
+	}
 	return [[KivaLoanRequest alloc] initWithRequestType:LOAN_DETAILS objects:loanIds];
 }
 
 + (instancetype)similarLoans:(NSNumber *)loanId {
 	return [[KivaLoanRequest alloc] initWithRequestType:SIMILAR objects:[NSArray arrayWithObjects:loanId, nil]];
+}
+
++ (instancetype)search:(KivaLoanSearchCriteria *)criteria {
+	return [[KivaLoanRequest alloc] initWithRequestType:SEARCH_CRITERIA criteria:criteria];
 }
 
 @end
