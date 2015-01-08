@@ -118,11 +118,15 @@
 //			NSLog(@"%@", error);
 //		}
 //	}];
-	
-	KivaTeamRequest *request = [KivaTeamRequest teamsForLoanId:[NSNumber numberWithInt:792588]];
+//	
+//	KivaTeamRequest *request = [KivaTeamRequest teamsForLoanId:[NSNumber numberWithInt:792588]];
+//	[KivaRequestManager sendTeamRequest:request withCompletionHandler:^(BOOL success, NSArray *partners, NSError *error){
+//	}];
+//
+	KivaTeamRequest *request = [KivaTeamRequest teamsForLenderId:@"jeremy"];
 	[KivaRequestManager sendTeamRequest:request withCompletionHandler:^(BOOL success, NSArray *partners, NSError *error){
 	}];
-	
+
 }
 
 - (void)didReceiveMemoryWarning {

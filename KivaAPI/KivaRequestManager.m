@@ -99,10 +99,10 @@ static NSString *applcationId	= @"";
 								   }
 								   
 								   if (!jsonError) {
-									   NSArray *loanDictionaries = [jsonDictionary objectForKey:kPartners];
+									   NSArray *partnerDictionaries = [jsonDictionary objectForKey:kPartners];
 									   NSMutableArray *values = [[NSMutableArray alloc] init];
 									   
-									   for (NSDictionary *d in loanDictionaries) {
+									   for (NSDictionary *d in partnerDictionaries) {
 										   [values addObject:[[KivaPartner alloc] initWithDictionary:d]];
 									   }
 									   
@@ -133,10 +133,10 @@ static NSString *applcationId	= @"";
 								   }
 								   
 								   if (!jsonError) {
-									   NSArray *loanDictionaries = [jsonDictionary objectForKey:kLenders];
+									   NSArray *lenderDictionaries = [jsonDictionary objectForKey:kLenders];
 									   NSMutableArray *values = [[NSMutableArray alloc] init];
 									   
-									   for (NSDictionary *d in loanDictionaries) {
+									   for (NSDictionary *d in lenderDictionaries) {
 										   [values addObject:[[KivaLender alloc] initWithDictionary:d]];
 									   }
 									   
@@ -167,11 +167,17 @@ static NSString *applcationId	= @"";
 								   }
 								   
 								   if (!jsonError) {
-									   NSArray *loanDictionaries = [jsonDictionary objectForKey:kTeams];
+									   NSArray *teamDictionaries = [jsonDictionary objectForKey:kTeams];
 									   NSMutableArray *values = [[NSMutableArray alloc] init];
 									   
-									   for (NSDictionary *d in loanDictionaries) {
-										   [values addObject:[[KivaTeam alloc] initWithDictionary:d]];
+									   if ([request onlyIds]) {
+										   for (NSNumber *n in teamDictionaries) {
+											   [values addObject:[[KivaLoan alloc] initWithDictionary:[NSDictionary dictionaryWithObjectsAndKeys:n, @"id", nil]]];
+										   }
+									   } else {
+										   for (NSDictionary *d in teamDictionaries) {
+											   [values addObject:[[KivaTeam alloc] initWithDictionary:d]];
+										   }
 									   }
 									   
 									   completionHandler(YES, [NSArray arrayWithArray:values], nil);

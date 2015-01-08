@@ -9,17 +9,23 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, TeamRequestType) {
-	LOAN_TEAMS
+	LOAN_TEAMS,
+	LENDER_TEAMS
 };
 
 @interface KivaTeamRequest : NSObject {
 	NSMutableArray *objects;
+	BOOL idsOnly;
 }
 
 @property (nonatomic, readonly) TeamRequestType requestType;
 
 + (instancetype)teamsForLoanId:(NSNumber *)loanId;
++ (instancetype)teamsForLoanId:(NSNumber *)loanId onlyIds:(BOOL)onlyIds;
++ (instancetype)teamsForLenderId:(NSString *)lenderId;
++ (instancetype)teamsForLenderId:(NSString *)lenderId onlyIds:(BOOL)onlyIds;
 
 - (NSURLRequest *)urlRequest;
+- (BOOL)onlyIds;
 
 @end
