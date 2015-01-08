@@ -9,9 +9,10 @@
 #import "KivaLenderRequest.h"
 #import "KivaRequestManager.h"
 
-static const NSString *kApiUrlString	= @"http://api.kivaws.org/v1/loans/";
-static const NSString *kJsonFormat		= @"json";
-static const NSString *kLenders			= @"lenders";
+static const NSString *kLendersApiUrlString	= @"http://api.kivaws.org/v1/lenders/newest";
+static const NSString *kLoanApiUrlString	= @"http://api.kivaws.org/v1/loans/";
+static const NSString *kJsonFormat			= @"json";
+static const NSString *kLenders				= @"lenders";
 
 @implementation KivaLenderRequest
 
@@ -30,6 +31,8 @@ static const NSString *kLenders			= @"lenders";
 		case LOAN_LENDERS:
 			request = [self loanLendersRequestUrl];
 			break;
+		case NEWEST:
+			request = [self newsetRequestUrl];
 		default:
 			break;
 	}
@@ -41,15 +44,27 @@ static const NSString *kLenders			= @"lenders";
 
 - (NSURLRequest *)loanLendersRequestUrl {
 	if ([[KivaRequestManager appID] isEqualToString:@""]) {
-		return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@/%@.%@",
+		return [self urlRequestFromString:[kLoanApiUrlString stringByAppendingFormat:@"%@/%@.%@",
 										   [self listObjects],
 										   kLenders,
 										   kJsonFormat]];
 	}
 	
-	return [self urlRequestFromString:[kApiUrlString stringByAppendingFormat:@"%@/%@.%@?%@=%@",
+	return [self urlRequestFromString:[kLoanApiUrlString stringByAppendingFormat:@"%@/%@.%@?%@=%@",
 									   [self listObjects],
 									   kLenders,
+									   kJsonFormat,
+									   kAppId,
+									   [KivaRequestManager appID]]];
+}
+
+- (NSURLRequest *)newsetRequestUrl {
+	if ([[KivaRequestManager appID] isEqualToString:@""]) {
+		return [self urlRequestFromString:[kLendersApiUrlString stringByAppendingFormat:@".%@",
+										   kJsonFormat]];
+	}
+	
+	return [self urlRequestFromString:[kLendersApiUrlString stringByAppendingFormat:@".%@?%@=%@",
 									   kJsonFormat,
 									   kAppId,
 									   [KivaRequestManager appID]]];
@@ -84,8 +99,12 @@ static const NSString *kLenders			= @"lenders";
 
 #pragma mark - Requests
 
-+ (instancetype)lendersForLoan:(NSNumber *)loanId {
++ (instancetype)lendersForLoanId:(NSNumber *)loanId {
 	return [[KivaLenderRequest alloc] initWithRequestType:LOAN_LENDERS objects:[NSArray arrayWithObjects:loanId, nil]];
+}
+
++ (instancetype)newestLenders {
+	return [[KivaLenderRequest alloc] initWithRequestType:NEWEST objects:nil];
 }
 
 @end

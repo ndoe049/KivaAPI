@@ -10,7 +10,8 @@
 
 typedef NS_ENUM(NSInteger, LenderRequestType) {
 	LOAN_LENDERS,
-	LENDER_DETAILS
+	NEWEST,
+	SEARCH
 };
 
 @interface KivaLenderRequest : NSObject {
@@ -19,7 +20,8 @@ typedef NS_ENUM(NSInteger, LenderRequestType) {
 
 @property (nonatomic, readonly) LenderRequestType requestType;
 
-+ (instancetype)lendersForLoan:(NSNumber *)loanId;
++ (instancetype)lendersForLoanId:(NSNumber *)loanId;
++ (instancetype)newestLenders;
 
 - (NSURLRequest *)urlRequest;
 

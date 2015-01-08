@@ -10,10 +10,12 @@
 #import "KivaLoan.h"
 #import "KivaPartner.h"
 #import "KivaLender.h"
+#import "KivaTeam.h"
 
 static const NSString *kLoans		= @"loans";
 static const NSString *kPartners	= @"partners";
 static const NSString *kLenders		= @"lenders";
+static const NSString *kTeams		= @"teams";
 
 static NSString *applcationId	= @"";
 
@@ -97,10 +99,10 @@ static NSString *applcationId	= @"";
 								   }
 								   
 								   if (!jsonError) {
-									   NSArray *loanDictionaries = [jsonDictionary objectForKey:kPartners];
+									   NSArray *partnerDictionaries = [jsonDictionary objectForKey:kPartners];
 									   NSMutableArray *values = [[NSMutableArray alloc] init];
 									   
-									   for (NSDictionary *d in loanDictionaries) {
+									   for (NSDictionary *d in partnerDictionaries) {
 										   [values addObject:[[KivaPartner alloc] initWithDictionary:d]];
 									   }
 									   
@@ -131,11 +133,51 @@ static NSString *applcationId	= @"";
 								   }
 								   
 								   if (!jsonError) {
-									   NSArray *loanDictionaries = [jsonDictionary objectForKey:kLenders];
+									   NSArray *lenderDictionaries = [jsonDictionary objectForKey:kLenders];
 									   NSMutableArray *values = [[NSMutableArray alloc] init];
 									   
-									   for (NSDictionary *d in loanDictionaries) {
+									   for (NSDictionary *d in lenderDictionaries) {
 										   [values addObject:[[KivaLender alloc] initWithDictionary:d]];
+									   }
+									   
+									   completionHandler(YES, [NSArray arrayWithArray:values], nil);
+								   } else {
+									   completionHandler(NO, nil, jsonError);
+								   }
+							   }
+	}];
+}
+
+#pragma mark - Team Requests
+
++ (void)sendTeamRequest:(KivaTeamRequest *)request withCompletionHandler:(teamsRequestCompletionHandler)completionHandler {
+	[NSURLConnection sendAsynchronousRequest:[request urlRequest] queue:[NSOperationQueue mainQueue]
+						   completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+							   if (connectionError) {
+								   completionHandler(NO, nil, connectionError);
+							   } else if (!response) {
+								   completionHandler(NO, nil, nil);
+							   } else {
+								   NSError *jsonError = nil;
+								   NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:data
+																								  options:NSJSONReadingAllowFragments
+																									error:&jsonError];
+								   if ([jsonDictionary isKindOfClass:[NSDictionary class]]) {
+									   jsonError = [self errorsForJSON:jsonDictionary];
+								   }
+								   
+								   if (!jsonError) {
+									   NSArray *teamDictionaries = [jsonDictionary objectForKey:kTeams];
+									   NSMutableArray *values = [[NSMutableArray alloc] init];
+									   
+									   if ([request onlyIds]) {
+										   for (NSNumber *n in teamDictionaries) {
+											   [values addObject:[[KivaLoan alloc] initWithDictionary:[NSDictionary dictionaryWithObjectsAndKeys:n, @"id", nil]]];
+										   }
+									   } else {
+										   for (NSDictionary *d in teamDictionaries) {
+											   [values addObject:[[KivaTeam alloc] initWithDictionary:d]];
+										   }
 									   }
 									   
 									   completionHandler(YES, [NSArray arrayWithArray:values], nil);

@@ -7,6 +7,7 @@
 //
 
 #import "KivaPartnerRequest.h"
+#import "KivaRequestManager.h"
 
 static const NSString *kApiUrlString		= @"http://api.kivaws.org/v1/partners.json";
 
@@ -19,7 +20,13 @@ static const NSString *kApiUrlString		= @"http://api.kivaws.org/v1/partners.json
 #pragma mark - NSURLRequestConstruction methods
 
 - (NSURLRequest *)listPartnersRequestUrl {
-	return [NSURLRequest requestWithURL:[NSURL URLWithString:(NSString *)kApiUrlString]];
+	if ([[KivaRequestManager appID] isEqualToString:@""]) {
+		return [NSURLRequest requestWithURL:[NSURL URLWithString:(NSString *)kApiUrlString]];
+	}
+	
+	return [NSURLRequest requestWithURL:[NSURL URLWithString:[(NSString *)kApiUrlString stringByAppendingFormat:@"?%@=%@",
+															  kAppId,
+															  [KivaRequestManager appID]]]];
 }
 
 #pragma mark - Requests

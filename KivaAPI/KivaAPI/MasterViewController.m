@@ -84,22 +84,22 @@
 //		}
 //	}];
 	
-	KivaLoanSearchCriteria *criteria = [[KivaLoanSearchCriteria alloc] init];
-	[criteria country:kUganda];
-	[criteria gender:FEMALE];
-	KivaLoanRequest *request = [KivaLoanRequest search:criteria];
-	[KivaRequestManager sendLoanRequest:request withCompletionHandler:^(BOOL success, NSArray *loans, NSError *error) {
-		if (success) {
-			[_objects removeAllObjects];
-			for (KivaLoan *loan in loans) {
-				[_objects addObject:loan];
-			}
-			
-			[self.tableView reloadData];
-		} else {
-			NSLog(@"%@", error);
-		}
-	}];
+//	KivaLoanSearchCriteria *criteria = [[KivaLoanSearchCriteria alloc] init];
+//	[criteria country:kUganda];
+//	[criteria gender:FEMALE];
+//	KivaLoanRequest *request = [KivaLoanRequest search:criteria];
+//	[KivaRequestManager sendLoanRequest:request withCompletionHandler:^(BOOL success, NSArray *loans, NSError *error) {
+//		if (success) {
+//			[_objects removeAllObjects];
+//			for (KivaLoan *loan in loans) {
+//				[_objects addObject:loan];
+//			}
+//			
+//			[self.tableView reloadData];
+//		} else {
+//			NSLog(@"%@", error);
+//		}
+//	}];
 
 //	KivaPartnerRequest *request = [KivaPartnerRequest listPartners];
 //	[KivaRequestManager sendPartnerRequest:request withCompletionHandler:^(BOOL success, NSArray *partners, NSError *error){
@@ -111,14 +111,31 @@
 //	}];
 
 //	KivaLenderRequest *request = [KivaLenderRequest lendersForLoan:[NSNumber numberWithInt:792588]];
-//	[KivaRequestManager sendLenderRequest:request withCompletionHandler:^(BOOL success, NSArray *partners, NSError *error){
+//	[KivaRequestManager sendLenderRequest:request withCompletionHandler:^(BOOL success, NSArray *lenders, NSError *error){
 //		if (success) {
 //			
 //		} else {
 //			NSLog(@"%@", error);
 //		}
 //	}];
-	
+//	
+//	KivaLenderRequest *request = [KivaLenderRequest newestLenders];
+//	[KivaRequestManager sendLenderRequest:request withCompletionHandler:^(BOOL success, NSArray *lenders, NSError *error){
+//		if (success) {
+//	
+//		} else {
+//			NSLog(@"%@", error);
+//		}
+//	}];
+//
+//	KivaTeamRequest *request = [KivaTeamRequest teamsForLoanId:[NSNumber numberWithInt:792588]];
+//	[KivaRequestManager sendTeamRequest:request withCompletionHandler:^(BOOL success, NSArray *partners, NSError *error){
+//	}];
+//
+//	KivaTeamRequest *request = [KivaTeamRequest teamsForLenderId:@"jeremy"];
+//	[KivaRequestManager sendTeamRequest:request withCompletionHandler:^(BOOL success, NSArray *partners, NSError *error){
+//	}];
+
 }
 
 - (void)didReceiveMemoryWarning {
