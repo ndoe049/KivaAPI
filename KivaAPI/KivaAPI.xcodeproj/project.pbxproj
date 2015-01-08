@@ -51,7 +51,7 @@
 /* Begin PBXFileReference section */
 		0A16F67132B4942D0AF51772 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D33D4562729CBCDF6A62235 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		6C35165E1A3F7A810044C51F /* KivaLoanSearchConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KivaLoanSearchConstants.h; sourceTree = "<group>"; };
+		6C35165E1A3F7A810044C51F /* KivaSearchConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KivaSearchConstants.h; sourceTree = "<group>"; };
 		6C69131F1A3503050012D6B1 /* KivaAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KivaAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C6913231A3503050012D6B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6C6913241A3503050012D6B1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -216,6 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				6C6913601A3503CB0012D6B1 /* KivaAPI.h */,
+				6C35165E1A3F7A810044C51F /* KivaSearchConstants.h */,
 				6C69134C1A3503230012D6B1 /* Auth */,
 				6C69134D1A3503270012D6B1 /* Request */,
 				6C69134E1A35032E0012D6B1 /* Request Manager */,
@@ -290,7 +291,6 @@
 		6C6913531A3503600012D6B1 /* Loan */ = {
 			isa = PBXGroup;
 			children = (
-				6C35165E1A3F7A810044C51F /* KivaLoanSearchConstants.h */,
 				6C6913541A35036D0012D6B1 /* KivaLoanRequest.h */,
 				6C6913551A35036D0012D6B1 /* KivaLoanRequest.m */,
 				6CD764EE1A3F4FD4005D176F /* KivaLoanSearchCriteria.h */,
