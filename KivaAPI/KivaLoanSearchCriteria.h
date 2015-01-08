@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import "KivaBorrower.h"
-#import "KivaLoanSearchConstants.h"
+#import "KivaSearchConstants.h"
 
 @interface KivaLoanSearchCriteria : NSObject
 
