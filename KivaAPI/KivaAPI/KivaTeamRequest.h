@@ -10,7 +10,9 @@
 
 typedef NS_ENUM(NSInteger, TeamRequestType) {
 	LOAN_TEAMS,
-	LENDER_TEAMS
+	LENDER_TEAMS,
+	TEAMS_SEARCH,
+	SHORTNAME
 };
 
 @interface KivaTeamRequest : NSObject {
@@ -24,6 +26,9 @@ typedef NS_ENUM(NSInteger, TeamRequestType) {
 + (instancetype)teamsForLoanId:(NSNumber *)loanId onlyIds:(BOOL)onlyIds;
 + (instancetype)teamsForLenderId:(NSString *)lenderId;
 + (instancetype)teamsForLenderId:(NSString *)lenderId onlyIds:(BOOL)onlyIds;
++ (instancetype)teamWithShortname:(NSString *)shortname;
++ (instancetype)teamsWithShortnames:(NSArray *)shortnames;
++ (instancetype)teamsWithShortnames:(NSArray *)shortnames onlyIds:(BOOL)onlyIds;
 
 - (NSURLRequest *)urlRequest;
 - (BOOL)onlyIds;

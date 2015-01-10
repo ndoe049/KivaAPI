@@ -9,10 +9,12 @@
 #import "KivaTeamRequest.h"
 #import "KivaRequestManager.h"
 
-static const NSString *kLoansApiUrlString	= @"http://api.kivaws.org/v1/loans/";
-static const NSString *kLenderApiUrlString	= @"http://api.kivaws.org/v1/lenders/";
-static const NSString *kApiPath				= @"/teams.json";
-static const NSString *kIdsOnly				= @"ids_only";
+static const NSString *kLoansApiUrlString		= @"http://api.kivaws.org/v1/loans/";
+static const NSString *kLenderApiUrlString		= @"http://api.kivaws.org/v1/lenders/";
+static const NSString *kShortnameApiUrlString	= @"http://api.kivaws.org/v1/teams/using_shortname/";
+static const NSString *kApiPath					= @"/teams.json";
+static const NSString *kIdsOnly					= @"ids_only";
+static const NSString *kJsonFormat				= @"json";
 
 @implementation KivaTeamRequest
 
@@ -40,6 +42,9 @@ static const NSString *kIdsOnly				= @"ids_only";
 	switch ([self requestType]) {
 		case LOAN_TEAMS:
 			request = [self teamsForLoanRequest];
+			break;
+		case SHORTNAME:
+			request = [self teamsForShortnameRequest];
 			break;
 		default:
 			request = [self teamsForLenderRequest];
@@ -111,6 +116,36 @@ static const NSString *kIdsOnly				= @"ids_only";
 									   [KivaRequestManager appID]]];
 }
 
+- (NSURLRequest *)teamsForShortnameRequest {
+	if ([[KivaRequestManager appID] isEqualToString:@""]) {
+		if (idsOnly) {
+			return [self urlRequestFromString:[kShortnameApiUrlString stringByAppendingFormat:@"%@.%@?%@=true",
+											   [self listObjects],
+											   kJsonFormat,
+											   kIdsOnly]];
+		}
+		
+		return [self urlRequestFromString:[kShortnameApiUrlString stringByAppendingFormat:@"%@.%@",
+										   [self listObjects],
+										   kJsonFormat]];
+	}
+	
+	if (idsOnly) {
+		return [self urlRequestFromString:[kShortnameApiUrlString stringByAppendingFormat:@"%@.%@?%@=%@&%@=true",
+										   [self listObjects],
+										   kJsonFormat,
+										   kAppId,
+										   [KivaRequestManager appID],
+										   kIdsOnly]];
+	}
+	
+	return [self urlRequestFromString:[kShortnameApiUrlString stringByAppendingFormat:@"%@.%@?%@=%@",
+									   [self listObjects],
+									   kJsonFormat,
+									   kAppId,
+									   [KivaRequestManager appID]]];
+}
+
 #pragma mark - Helper Methods
 
 - (NSString *)listObjects {
@@ -128,6 +163,14 @@ static const NSString *kIdsOnly				= @"ids_only";
 			if ([o isKindOfClass:[NSString class]]) {
 				value = [value stringByAppendingFormat:@"%@", ((NSString *)o)];
 				break;
+			}
+		}
+	} else if ([self requestType] == SHORTNAME) {
+		NSString *delimiter = @"";
+		for (NSObject *o in objects) {
+			if ([o isKindOfClass:[NSString class]]) {
+				value = [value stringByAppendingFormat:@"%@%@", delimiter, ((NSString *)o)];
+				delimiter = @",";
 			}
 		}
 	}
@@ -164,6 +207,22 @@ static const NSString *kIdsOnly				= @"ids_only";
 
 + (instancetype)teamsForLenderId:(NSString *)lenderId onlyIds:(BOOL)onlyIds {
 	return [[KivaTeamRequest alloc] initWithRequestType:LENDER_TEAMS objects:[NSArray arrayWithObjects:lenderId, nil] onlyIds:onlyIds];
+}
+
++ (instancetype)teamWithShortname:(NSString *)shortname {
+	return [KivaTeamRequest teamsWithShortnames:[NSArray arrayWithObject:shortname]];
+}
+
++ (instancetype)teamsWithShortnames:(NSArray *)shortnames {
+	if (shortnames && [shortnames count] > 20) {
+		NSLog(@"API only supports up max 20 shortnames at a time");
+	}
+
+	return [[KivaTeamRequest alloc] initWithRequestType:SHORTNAME objects:shortnames];
+}
+
++ (instancetype)teamsWithShortnames:(NSArray *)shortnames onlyIds:(BOOL)onlyIds {
+	return [[KivaTeamRequest alloc] initWithRequestType:SHORTNAME objects:shortnames onlyIds:onlyIds];
 }
 
 @end

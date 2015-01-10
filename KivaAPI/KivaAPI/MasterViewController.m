@@ -140,7 +140,7 @@
 //	}];
 //
 //	KivaTeamRequest *request = [KivaTeamRequest teamsForLoanId:[NSNumber numberWithInt:792588]];
-//	[KivaRequestManager sendTeamRequest:request withCompletionHandler:^(BOOL success, NSArray *partners, NSError *error){
+//	[KivaRequestManager sendTeamRequest:request withCompletionHandler:^(BOOL success, NSArray *teams, NSError *error){
 //		if (success) {
 //			
 //		} else {
@@ -148,23 +148,32 @@
 //		}
 //	}];
 //
-//	KivaTeamRequest *request = [KivaTeamRequest teamsForLenderId:@"jeremy"];
-//	[KivaRequestManager sendTeamRequest:request withCompletionHandler:^(BOOL success, NSArray *partners, NSError *error){
+//	KivaTeamRequest *request = [KivaTeamRequest teamsForLenderId:@"jeremy" onlyIds:YES];
+//	[KivaRequestManager sendTeamRequest:request withCompletionHandler:^(BOOL success, NSArray *teams, NSError *error){
 //		if (success) {
 //			
 //		} else {
 //			
 //		}
 //	}];
-
-	KivaRepaymentRequest *request = [KivaRepaymentRequest repaymentsForLoanId:[NSNumber numberWithInt:782588]];
-	[KivaRequestManager sendRepaymentRequest:request withCompletionHandler:^(BOOL success, NSArray *partners, NSError *error){
-		if (success) {
-			
-		} else {
-			
-		}
-	}];
+//
+//	KivaTeamRequest *request = [KivaTeamRequest teamWithShortname:@"buildkiva"];
+//	[KivaRequestManager sendTeamRequest:request withCompletionHandler:^(BOOL success, NSArray *teams, NSError *error){
+//		if (success) {
+//			
+//		} else {
+//			
+//		}
+//	}];
+//
+//	KivaRepaymentRequest *request = [KivaRepaymentRequest repaymentsForLoanId:[NSNumber numberWithInt:782588]];
+//	[KivaRequestManager sendRepaymentRequest:request withCompletionHandler:^(BOOL success, NSArray *repayments, NSError *error){
+//		if (success) {
+//			
+//		} else {
+//			
+//		}
+//	}];
 	
 }
 

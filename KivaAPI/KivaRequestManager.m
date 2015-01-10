@@ -171,14 +171,12 @@ static NSString *applcationId	= @"";
 									   NSArray *teamDictionaries = [jsonDictionary objectForKey:kTeams];
 									   NSMutableArray *values = [[NSMutableArray alloc] init];
 									   
-									   if ([request onlyIds]) {
-										   for (NSNumber *n in teamDictionaries) {
-											   [values addObject:[[KivaLoan alloc] initWithDictionary:[NSDictionary dictionaryWithObjectsAndKeys:n, @"id", nil]]];
-										   }
-									   } else {
+									   if (![request onlyIds]) {
 										   for (NSDictionary *d in teamDictionaries) {
 											   [values addObject:[[KivaTeam alloc] initWithDictionary:d]];
 										   }
+									   } else {
+										   [values addObjectsFromArray:teamDictionaries];
 									   }
 									   
 									   completionHandler(YES, [NSArray arrayWithArray:values], nil);
