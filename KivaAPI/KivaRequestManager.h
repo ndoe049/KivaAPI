@@ -12,6 +12,7 @@
 #import "KivaPartnerRequest.h"
 #import "KivaLenderRequest.h"
 #import "KivaTeamRequest.h"
+#import "KivaRepaymentRequest.h"
 #import "KivaImage.h"
 
 static const NSString *kAppId	= @"app_id";
@@ -21,6 +22,7 @@ typedef void (^imageRequestCompletionHandler)(BOOL success, UIImage *image, NSEr
 typedef void (^partnerRequestCompletionHandler)(BOOL success, NSArray *partners, NSError *error);
 typedef void (^lendersRequestCompletionHandler)(BOOL success, NSArray *lenders, NSError *error);
 typedef void (^teamsRequestCompletionHandler)(BOOL success, NSArray *teams, NSError *error);
+typedef void (^repaymentCompletionHandler)(BOOL success, NSArray *repayments, NSError *error);
 
 @interface KivaRequestManager : NSObject
 
@@ -40,6 +42,9 @@ typedef void (^teamsRequestCompletionHandler)(BOOL success, NSArray *teams, NSEr
 
 + (void)sendTeamRequest:(KivaTeamRequest *)request
   withCompletionHandler:(teamsRequestCompletionHandler)completionHandler;
+
++ (void)sendRepaymentRequest:(KivaRepaymentRequest *)request
+  withCompletionHandler:(repaymentCompletionHandler)completionHandler;
 
 + (void)addAppId:(NSString *)appId;
 + (NSString *)appID;

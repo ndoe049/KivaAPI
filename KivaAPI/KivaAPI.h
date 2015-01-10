@@ -27,3 +27,5 @@
 #import "KivaTeam.h"
 #import "KivaTeamRequest.h"
 #import "KivaLenderSearchCriteria.h"
+#import "KivaRepayment.h"
+#import "KivaRepaymentRequest.h"

@@ -11,6 +11,7 @@
 #import "KivaPartner.h"
 #import "KivaLender.h"
 #import "KivaTeam.h"
+#import "KivaRepayment.h"
 
 static const NSString *kLoans		= @"loans";
 static const NSString *kPartners	= @"partners";
@@ -186,6 +187,36 @@ static NSString *applcationId	= @"";
 								   }
 							   }
 	}];
+}
+
+#pragma mark - Repayment Request
+
++ (void)sendRepaymentRequest:(KivaRepaymentRequest *)request withCompletionHandler:(repaymentCompletionHandler)completionHandler {
+	[NSURLConnection sendAsynchronousRequest:[request urlRequest] queue:[NSOperationQueue mainQueue]
+						   completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+							   if (connectionError) {
+								   completionHandler(NO, nil, connectionError);
+							   } else if (!response) {
+								   completionHandler(NO, nil, nil);
+							   } else {
+								   NSError *jsonError = nil;
+								   NSArray *jsonDictionaryArray = [NSJSONSerialization JSONObjectWithData:data
+																								  options:NSJSONReadingAllowFragments
+																									error:&jsonError];
+								   
+								   if (!jsonError) {
+									   NSMutableArray *values = [[NSMutableArray alloc] init];
+									   
+									   for (NSDictionary *d in jsonDictionaryArray) {
+										   [values addObject:[[KivaRepayment alloc] initWithDictionary:d]];
+									   }
+									   
+									   completionHandler(YES, [NSArray arrayWithArray:values], nil);
+								   } else {
+									   completionHandler(NO, nil, jsonError);
+								   }
+							   }
+						   }];
 }
 
 #pragma mark - Helper methods

@@ -147,16 +147,25 @@
 //			
 //		}
 //	}];
+//
+//	KivaTeamRequest *request = [KivaTeamRequest teamsForLenderId:@"jeremy"];
+//	[KivaRequestManager sendTeamRequest:request withCompletionHandler:^(BOOL success, NSArray *partners, NSError *error){
+//		if (success) {
+//			
+//		} else {
+//			
+//		}
+//	}];
 
-	KivaTeamRequest *request = [KivaTeamRequest teamsForLenderId:@"jeremy"];
-	[KivaRequestManager sendTeamRequest:request withCompletionHandler:^(BOOL success, NSArray *partners, NSError *error){
+	KivaRepaymentRequest *request = [KivaRepaymentRequest repaymentsForLoanId:[NSNumber numberWithInt:782588]];
+	[KivaRequestManager sendRepaymentRequest:request withCompletionHandler:^(BOOL success, NSArray *partners, NSError *error){
 		if (success) {
 			
 		} else {
 			
 		}
 	}];
-
+	
 }
 
 - (void)didReceiveMemoryWarning {
