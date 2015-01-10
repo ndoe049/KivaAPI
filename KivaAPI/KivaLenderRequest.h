@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "KivaLenderSearchCriteria.h"
 
 typedef NS_ENUM(NSInteger, LenderRequestType) {
 	LOAN_LENDERS,
@@ -19,8 +20,10 @@ typedef NS_ENUM(NSInteger, LenderRequestType) {
 }
 
 @property (nonatomic, readonly) LenderRequestType requestType;
+@property (nonatomic, readonly) KivaLenderSearchCriteria *criteria;
 
 + (instancetype)lendersForLoanId:(NSNumber *)loanId;
++ (instancetype)search:(KivaLenderSearchCriteria *)criteria;
 + (instancetype)newestLenders;
 
 - (NSURLRequest *)urlRequest;

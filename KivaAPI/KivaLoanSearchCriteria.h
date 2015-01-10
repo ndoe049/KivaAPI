@@ -36,7 +36,7 @@
 - (void)partnerMaxDefault:(NSNumber *)maxDefault;
 - (void)includeUnratedPartners:(BOOL)includeUnrated;
 - (void)includeCurrnecyRiskPartners:(BOOL)includeCurrencyRisk;
-- (void)returnIdsOnly:(BOOL)idsOnly;
+- (void)returnIdsOnly;
 
 - (void)sortByField:(NSString *)sortParam;
 - (void)sortByFields:(NSArray *)sortParams;

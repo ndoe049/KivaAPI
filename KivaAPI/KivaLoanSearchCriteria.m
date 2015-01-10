@@ -196,12 +196,8 @@ static const NSString *kFalse					= @"false";
 	}
 }
 
-- (void)returnIdsOnly:(BOOL)idsOnly {
-	if (idsOnly) {
-		[self addValue:kTrue withKey:kIdsOnlyKey];
-	} else {
-		[self addValue:kFalse withKey:kIdsOnlyKey];
-	}
+- (void)returnIdsOnly {
+	[self addValue:kTrue withKey:kIdsOnlyKey];
 }
 
 #pragma mark - Sorting

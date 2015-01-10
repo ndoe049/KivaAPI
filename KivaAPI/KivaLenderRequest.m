@@ -9,6 +9,7 @@
 #import "KivaLenderRequest.h"
 #import "KivaRequestManager.h"
 
+static const NSString *kSearchApiUrlString	= @"http://api.kivaws.org/v1/lenders/search";
 static const NSString *kLendersApiUrlString	= @"http://api.kivaws.org/v1/lenders/newest";
 static const NSString *kLoanApiUrlString	= @"http://api.kivaws.org/v1/loans/";
 static const NSString *kJsonFormat			= @"json";
@@ -25,6 +26,16 @@ static const NSString *kLenders				= @"lenders";
 	return self;
 }
 
+- (id)initWithRequestType:(LenderRequestType)requestType criteria:(KivaLenderSearchCriteria *)criteria {
+	if (self = [super init]) {
+		_requestType = requestType;
+		_criteria = criteria;
+		objects = [[NSMutableArray alloc] init];
+	}
+	
+	return self;
+}
+
 - (NSURLRequest *)urlRequest {
 	NSURLRequest *request = nil;
 	switch ([self requestType]) {
@@ -33,6 +44,10 @@ static const NSString *kLenders				= @"lenders";
 			break;
 		case NEWEST:
 			request = [self newsetRequestUrl];
+			break;
+		case SEARCH:
+			request = [self serachRequestUrl];
+			break;
 		default:
 			break;
 	}
@@ -65,6 +80,34 @@ static const NSString *kLenders				= @"lenders";
 	}
 	
 	return [self urlRequestFromString:[kLendersApiUrlString stringByAppendingFormat:@".%@?%@=%@",
+									   kJsonFormat,
+									   kAppId,
+									   [KivaRequestManager appID]]];
+}
+
+- (NSURLRequest *)serachRequestUrl {
+	if (_criteria) {
+		if ([[KivaRequestManager appID] isEqualToString:@""]) {
+			return [self urlRequestFromString:[kSearchApiUrlString stringByAppendingFormat:@".%@?%@",
+											   kJsonFormat,
+											   [_criteria build]]];
+		}
+		
+		return [self urlRequestFromString:[kSearchApiUrlString stringByAppendingFormat:@".%@?%@&%@=%@",
+										   kJsonFormat,
+										   [_criteria build],
+										   kAppId,
+										   [KivaRequestManager appID]]];
+	} {
+		NSLog(@"No search criteria!");
+	}
+	
+	if ([[KivaRequestManager appID] isEqualToString:@""]) {
+		return [self urlRequestFromString:[kSearchApiUrlString stringByAppendingFormat:@".%@",
+										   kJsonFormat]];
+	}
+	
+	return [self urlRequestFromString:[kSearchApiUrlString stringByAppendingFormat:@".%@?%@=%@",
 									   kJsonFormat,
 									   kAppId,
 									   [KivaRequestManager appID]]];
@@ -105,6 +148,10 @@ static const NSString *kLenders				= @"lenders";
 
 + (instancetype)newestLenders {
 	return [[KivaLenderRequest alloc] initWithRequestType:NEWEST objects:nil];
+}
+
++ (instancetype)search:(KivaLenderSearchCriteria *)criteria {
+	return [[KivaLenderRequest alloc] initWithRequestType:SEARCH criteria:criteria];
 }
 
 @end

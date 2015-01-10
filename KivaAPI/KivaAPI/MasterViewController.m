@@ -127,14 +127,35 @@
 //			NSLog(@"%@", error);
 //		}
 //	}];
+//	
+//	KivaLenderSearchCriteria *criteria = [[KivaLenderSearchCriteria alloc] init];
+//	[criteria country:kUnitedStates];
+//	KivaLenderRequest *request = [KivaLenderRequest search:criteria];
+//	[KivaRequestManager sendLenderRequest:request withCompletionHandler:^(BOOL success, NSArray *lenders, NSError *error){
+//		if (success) {
+//			
+//		} else {
+//			NSLog(@"%@", error);
+//		}
+//	}];
 //
 //	KivaTeamRequest *request = [KivaTeamRequest teamsForLoanId:[NSNumber numberWithInt:792588]];
 //	[KivaRequestManager sendTeamRequest:request withCompletionHandler:^(BOOL success, NSArray *partners, NSError *error){
+//		if (success) {
+//			
+//		} else {
+//			
+//		}
 //	}];
-//
-//	KivaTeamRequest *request = [KivaTeamRequest teamsForLenderId:@"jeremy"];
-//	[KivaRequestManager sendTeamRequest:request withCompletionHandler:^(BOOL success, NSArray *partners, NSError *error){
-//	}];
+
+	KivaTeamRequest *request = [KivaTeamRequest teamsForLenderId:@"jeremy"];
+	[KivaRequestManager sendTeamRequest:request withCompletionHandler:^(BOOL success, NSArray *partners, NSError *error){
+		if (success) {
+			
+		} else {
+			
+		}
+	}];
 
 }
 

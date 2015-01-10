@@ -26,3 +26,4 @@
 #import "KivaSearchConstants.h"
 #import "KivaTeam.h"
 #import "KivaTeamRequest.h"
+#import "KivaLenderSearchCriteria.h"
